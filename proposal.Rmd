@@ -1,6 +1,9 @@
 # Proposal
 
 ## Research topic
+The research focuses on the data of COVID-19. We aim to explore the worldwide spread trend of the disease as well as detailed patterns in specific countries. The questions we are most curious about include: What is the overall trend of the incidence across the world from 2019 to 2022? How much does vaccination prevent the spread? How does special public health and social measures influence the incidence and are there any side-effects?
+
+The context of the research is organised as the following. In the first part of the analysis, we explore the global COVID-19 cases and deaths, with time ranging from 2019 to 2022. We hope to present the overall pattern of the spread in different time and spaces. The second part of the research features the the introduction and influence of the vaccination. We analyze only vaccination data in the US to reveal more detailed information. In the last part of the research, we look at the effects of special public health measures in preventing the epidemic, as well as their potential influence in the society. This part uses data from China, where strict policies, like restriction on gatherings or adapting and closing offices have taken place.
 
 ## Data availability
 
