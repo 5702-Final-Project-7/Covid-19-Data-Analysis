@@ -7,7 +7,7 @@ The context of the research is organised as the following. In the first part of 
 
 ## Data availability
 
-We will use data from the WHO coronavirus (COVID-19) dashboard, U.S. COVID-19 Data- JHU and data dashboard website of National Bureau of Statistics of China.
+We will use data from the WHO coronavirus (COVID-19) dashboard, U.S. COVID-19 Data from JHU and data dashboard website of National Bureau of Statistics of China.
 
 ### The WHO coronavirus (COVID-19) dashboard 
 
