@@ -23,7 +23,7 @@
 <meta name="author" content="Weipeng Li, Ruochen Zhang, Yujia Chen" />
 
 
-<meta name="date" content="2022-10-28" />
+<meta name="date" content="2022-11-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -76,7 +76,12 @@
 <li class="chapter" data-level="2" data-path="proposal.html"><a href="proposal.html"><i class="fa fa-check"></i><b>2</b> Proposal</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="proposal.html"><a href="proposal.html#research-topic"><i class="fa fa-check"></i><b>2.1</b> Research topic</a></li>
-<li class="chapter" data-level="2.2" data-path="proposal.html"><a href="proposal.html#data-availability"><i class="fa fa-check"></i><b>2.2</b> Data availability</a></li>
+<li class="chapter" data-level="2.2" data-path="proposal.html"><a href="proposal.html#data-availability"><i class="fa fa-check"></i><b>2.2</b> Data availability</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="proposal.html"><a href="proposal.html#the-who-coronavirus-covid-19-dashboard"><i class="fa fa-check"></i><b>2.2.1</b> The WHO coronavirus (COVID-19) dashboard</a></li>
+<li class="chapter" data-level="2.2.2" data-path="proposal.html"><a href="proposal.html#u.s.-covid-19-data--jhu"><i class="fa fa-check"></i><b>2.2.2</b> U.S. COVID-19 Data- JHU</a></li>
+<li class="chapter" data-level="2.2.3" data-path="proposal.html"><a href="proposal.html#national-bureau-of-statistics-of-china"><i class="fa fa-check"></i><b>2.2.3</b> National Bureau of Statistics of China</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>3</b> Data</a>
 <ul>
@@ -110,10 +115,72 @@
 <h1><span class="header-section-number">Chapter 2</span> Proposal<a href="proposal.html#proposal" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="research-topic" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Research topic<a href="proposal.html#research-topic" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The research focuses on the data of COVID-19. We aim to explore the worldwide spread trend of the disease as well as detailed patterns in specific countries. The questions we are most curious about include: What is the overall trend of the incidence across the world from 2019 to 2022? How much does vaccination prevent the spread? How does special public health and social measures influence the incidence and are there any side-effects?</p>
+<p>The context of the research is organised as the following. In the first part of the analysis, we explore the global COVID-19 cases and deaths, with time ranging from 2019 to 2022. We hope to present the overall pattern of the spread in different time and spaces. The second part of the research features the the introduction and influence of the vaccination. We analyze only vaccination data in the US to reveal more detailed information. In the last part of the research, we look at the effects of special public health measures in preventing the epidemic, as well as their potential influence in the society. This part uses data from China, where strict policies, like restriction on gatherings or adapting and closing offices have taken place.</p>
 </div>
 <div id="data-availability" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> Data availability<a href="proposal.html#data-availability" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We will use data from the WHO coronavirus (COVID-19) dashboard, U.S. COVID-19 Data- JHU and data dashboard website of National Bureau of Statistics of China.</p>
+<div id="the-who-coronavirus-covid-19-dashboard" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> The WHO coronavirus (COVID-19) dashboard<a href="proposal.html#the-who-coronavirus-covid-19-dashboard" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The dashboard data present official daily counts of COVID-19 cases, deaths and vaccine utilisation reported by countries, territories and areas.Links:<a href="https://covid19.who.int/data" class="uri">https://covid19.who.int/data</a></p>
+<div id="data-source" class="section level4 hasAnchor" number="2.2.1.1">
+<h4><span class="header-section-number">2.2.1.1</span> Data source<a href="proposal.html#data-source" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>Case and death count data:</strong> WHO collected the numbers of confirmed COVID-19 cases and deaths through official communications, complemented by monitoring the official ministries of health websites and social media accounts. Since 22 March 2020, global data are compiled through WHO region-specific dashboards, and/or aggregate count data reported to WHO headquarters daily.</p>
+<p><strong>Vaccine data:</strong> these data are pooled from numerous sources, including direct reports from Member States, WHO review of publicly available official data, or data collated and published by third-party sites.</p>
+</div>
+<div id="data-format" class="section level4 hasAnchor" number="2.2.1.2">
+<h4><span class="header-section-number">2.2.1.2</span> Data format<a href="proposal.html#data-format" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Data can be downloaded in comma-separated values (CSV) files. They can be imported by R read.csv() function.</p>
+</div>
+<div id="frequency-of-updates" class="section level4 hasAnchor" number="2.2.1.3">
+<h4><span class="header-section-number">2.2.1.3</span> Frequency of updates<a href="proposal.html#frequency-of-updates" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Cases and deaths are updated on a daily basis except weekends. Vaccine data are updated on a weekly basis. WHO continues to encourage all users to prioritize weekly counts and long-term trends (over several weeks) as a more reliable measure of COVID-19 epidemiological activity.</p>
+</div>
+</div>
+<div id="u.s.-covid-19-data--jhu" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> U.S. COVID-19 Data- JHU<a href="proposal.html#u.s.-covid-19-data--jhu" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="description" class="section level4 hasAnchor" number="2.2.2.1">
+<h4><span class="header-section-number">2.2.2.1</span> Description<a href="proposal.html#description" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The cases and deaths data provides cases and deaths dating back to the beginning of the pandemic in January 2020. Link: <a href="https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_daily_reports_us" class="uri">https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_daily_reports_us</a></p>
+<p>The vaccination data provides the vaccination efforts across the United States. Link: <a href="https://github.com/govex/COVID-19/tree/master/data_tables/vaccine_data/us_data" class="uri">https://github.com/govex/COVID-19/tree/master/data_tables/vaccine_data/us_data</a></p>
+</div>
+<div id="data-source-1" class="section level4 hasAnchor" number="2.2.2.2">
+<h4><span class="header-section-number">2.2.2.2</span> Data source<a href="proposal.html#data-source-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Cases and deaths data: the data is sourced from governments, national and subnational agencies across the country - a full list of data sources is published on <a href="https://github.com/CSSEGISandData/COVID-19">Johns Hopkins’s GitHub site</a>. COVID-19 data were collected by states and consolidated by the Center for Systems Science and Engineering (CSSE) at Johns Hopkins University.</p>
+<p>Vaccination data: the data is sourced from the U.S. Centers for Disease Control and Prevention (CDC). Federal agency data are included as part of jurisdiction, state, or territory aggregate metrics. To avoid duplicate counts, the agency data will not be combined with other data. National and jurisdictional metrics reported to CDC include vaccination data distribution to and administered in the jurisdiction partner clinics, retail pharmacies, and federal partners and programs.</p>
+</div>
+<div id="data-format-1" class="section level4 hasAnchor" number="2.2.2.3">
+<h4><span class="header-section-number">2.2.2.3</span> Data format<a href="proposal.html#data-format-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The data can be downloaded as csv file. We will combine the data files in R for data analysis.</p>
+</div>
+<div id="frequency-of-updates-1" class="section level4 hasAnchor" number="2.2.2.4">
+<h4><span class="header-section-number">2.2.2.4</span> Frequency of updates<a href="proposal.html#frequency-of-updates-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Covid cases and deaths data are updated once per day between 04:45 and 05:15 GMT, with the most recent official numbers up to the previous day. Vaccination data are updated once a week, with data up to the previous day. Data from previous days will be updated as vaccination records are processed.</p>
+</div>
+<div id="delays-in-death-reports" class="section level4 hasAnchor" number="2.2.2.5">
+<h4><span class="header-section-number">2.2.2.5</span> Delays in death reports<a href="proposal.html#delays-in-death-reports" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The number of deaths reported on a given day does not necessarily reflect the actual number of COVID-19 deaths on that day, or in the previous 24 hours. This is due to lags and delays in reporting.</p>
+<p>The delay in reporting can be on the order of days and sometimes as long as a week or more. This means the number of deaths <em>reported</em> on a given day is not reflective of the actual number of deaths that occurred on that day.</p>
+</div>
+</div>
+<div id="national-bureau-of-statistics-of-china" class="section level3 hasAnchor" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> National Bureau of Statistics of China<a href="proposal.html#national-bureau-of-statistics-of-china" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can find the total mortality rate of China at a yearly basis on the national data website of National Bureau of Statistics of China.Links:<a href="https://data.stats.gov.cn/easyquery.htm?cn=C01" class="uri">https://data.stats.gov.cn/easyquery.htm?cn=C01</a></p>
+<div id="data-source-2" class="section level4 hasAnchor" number="2.2.3.1">
+<h4><span class="header-section-number">2.2.3.1</span> Data source<a href="proposal.html#data-source-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>National Bureau of Statistics of China collects and calculates the data based on sample survey.</p>
+</div>
+<div id="data-format-2" class="section level4 hasAnchor" number="2.2.3.2">
+<h4><span class="header-section-number">2.2.3.2</span> Data format<a href="proposal.html#data-format-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The data can be downloaded in CSV files. They can be imported by R read.csv() function.</p>
+</div>
+<div id="frequency-of-updates-2" class="section level4 hasAnchor" number="2.2.3.3">
+<h4><span class="header-section-number">2.2.3.3</span> Frequency of updates<a href="proposal.html#frequency-of-updates-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>The total mortality rates are updated on an annual basis.</p>
 
+</div>
+</div>
 </div>
 </div>
             </section>
