@@ -1,0 +1,186 @@
+---
+title: "Codes & Graphs_lwp"
+author: "Weipeng Li"
+date: "2022-11-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(scales)
+```
+
+## Worldwide cases/deaths of covid-19 - time series
+
+```{r}
+# data preprocessing
+# only keep the new reported data
+who_daily <- read.csv("WHO-COVID-19-global-data.csv")
+world_daily <- who_daily %>%
+  group_by(Date_reported) %>%
+  mutate(world_new_cases = sum(New_cases)) %>%
+  #mutate(world_cumulative_cases = sum(Cumulative_cases)) %>%
+  mutate(world_new_deaths = sum(New_deaths)) %>%
+  #mutate(world_cumulative_deaths = sum(Cumulative_deaths)) %>%
+  select(c(Date_reported, world_new_cases, world_new_deaths)) %>%
+  distinct()  %>%
+  mutate(Date_reported = as.Date(Date_reported))
+summary(world_daily)
+
+# convert to long format
+world_daily_long <- pivot_longer(world_daily,col=!Date_reported) 
+world_daily_long
+```
+
+```{r}
+# new cases by day
+ggplot(world_daily, aes(Date_reported,world_new_cases))+
+  geom_line()+
+  xlab('Date Reported')+
+  ylab('New Cases')+
+  theme_grey(14)
+```
+
+```{r}
+# new deaths by day
+ggplot(world_daily, aes(Date_reported,world_new_deaths))+
+  geom_line()+
+  xlab('Date Reported')+
+  ylab('New Deaths')+
+  theme_grey(14)
+```
+
+```{r}
+# new cases by day after Nov 2021
+world_daily %>%
+  filter(Date_reported >= '2021-11-01') %>%
+  ggplot(aes(Date_reported,world_new_cases)) +
+  geom_line() +
+  xlab('Date Reported') +
+  ylab('New Cases') +
+  theme_grey(14)
+```
+
+```{r}
+```{r}
+# new deaths by day after Nov 2021
+world_daily %>%
+  filter(Date_reported >= '2021-11-01') %>%
+  ggplot(aes(Date_reported,world_new_deaths)) +
+  geom_line() +
+  xlab('Date Reported') +
+  ylab('New Deaths') +
+  theme_grey(14)
+```
+
+## Worldwide Vaccintaion Data
+```{r}
+# data preprocessing
+world_vac_df <- read.csv('vaccination-data.csv')
+#summary(world_vac_df)
+world_vac <- world_vac_df %>%
+  select(COUNTRY,PERSONS_FULLY_VACCINATED_PER100) %>%
+  rename(country=COUNTRY, fully_vaccinated_rate = PERSONS_FULLY_VACCINATED_PER100)
+summary(world_vac)
+
+# check for missing values and outliers
+na_index <- c(which(is.na(world_vac$fully_vaccinated_rate)),which(world_vac$fully_vaccinated_rate<=0))
+outlier_index <- which(world_vac$fully_vaccinated_rate>100)
+world_vac[c(na_index,outlier_index),]
+world_vac <- world_vac[-c(na_index,outlier_index),]
+summary(world_vac)
+
+# Set panels for visualization
+world_vac_panel <- world_vac %>%
+  mutate(Panel=cut(fully_vaccinated_rate,10,breaks=c(0,10,20,30,40,50,60,70,80,90,100),
+         labels=c('<10%','10%-20%','20%-30%','30%-40%','40%-50%',
+                  '50%-60%','60%-70%','70%-80%','80%-90%','>90%'))) %>%
+  mutate(Panel=fct_rev(Panel))
+```
+
+```{r}
+#options(repr.plot.width = 5, repr.plot.height =10)
+ggplot(world_vac_panel, aes(fully_vaccinated_rate, y = reorder(country, fully_vaccinated_rate))) +
+  geom_point() +
+  facet_wrap(~Panel, ncol = 2, scales = "free") +
+  ggtitle('Vaccination Rate by Country') +
+  xlab('Vaccination Rate') +
+  ylab('')
+  #+theme(plot.margin = unit(c(2,2,2,2),'mm'))
+```
+
+## Vaccination in American Population
+
+```{r}
+us_vac <- world_vac_df %>%
+  filter(COUNTRY=='United States of America') %>%
+  select(PERSONS_VACCINATED_1PLUS_DOSE_PER100,
+         PERSONS_FULLY_VACCINATED_PER100,
+         PERSONS_BOOSTER_ADD_DOSE_PER100) %>%
+  rename(vaccinated=PERSONS_VACCINATED_1PLUS_DOSE_PER100,
+         fully_vaccinated=PERSONS_FULLY_VACCINATED_PER100,
+         boosted=PERSONS_BOOSTER_ADD_DOSE_PER100) %>%
+  mutate(not_vaccinated=100-vaccinated) %>%
+  #mutate(vaccinated=vaccinated-fully_vaccinated) %>%
+  #mutate(fully_vaccinated=fully_vaccinated-boosted) %>%
+  mutate(country='United States of America') %>%
+  pivot_longer(!country) %>%
+  mutate(value=percent(value/100.0, accuracy=0.1))
+us_vac
+```
+```{r}
+ggplot(us_vac, aes(fct_rev(fct_relevel(name,'not_vaccinated',after=Inf)),value)) +
+  geom_col() +
+  xlab('Vaccination State')+
+  ylab('Percent') +
+  ggtitle('Vaccination State in US Population') +
+  geom_text(aes(label=value), position=position_dodge(width=0.9), vjust=-0.25)
+  
+```
+
+## Vaccination Rate by Ages
+
+Case rate by age group???
+
+```{r}
+# data preprocessing
+vac_age_df <- read.csv('COVID-19_Vaccination_and_Case_Trends_by_Age_Group__United_States.csv')
+vac_age <- vac_age_df %>%
+  select(Date.Administered,AgeGroupVacc,Series_Complete_Pop_pct_agegroup) %>%
+  rename(date=Date.Administered,age=AgeGroupVacc,
+         vac_rate=Series_Complete_Pop_pct_agegroup) %>%
+  filter(date==max(date)) %>%
+  mutate(vac_rate=percent(vac_rate))
+vac_age
+```
+
+```{r}
+ggplot(vac_age, aes(fct_relevel(fct_relevel(age,'2 - 4 Years',after=1),'5 - 11 Years',after=2),vac_rate)) +
+  geom_col() +
+  #scale_y_continuous(limits = c(0, 0.9)) +
+  geom_text(aes(label=vac_rate), position=position_dodge(width=0.9), vjust=-0.25)+
+  xlab('Ages')+
+  ylab('Vaccination Rate') +
+  ggtitle('Vaccination Rate by Age')
+```
+
+
+
+```{r}
+# world_vac_filter <- world_vac %>%
+#   add_row(country='Others',fully_vaccinated_rate=mean(world_vac$fully_vaccinated_rate[world_vac$fully_vaccinated_rate < 80], na.rm=TRUE)) %>%
+#   filter(fully_vaccinated_rate > 80 | country=='Others')
+# ggplot(world_vac_filter, aes(x=fully_vaccinated_rate, y=fct_reorder(country,fully_vaccinated_rate)))+
+#   geom_point()+
+#   xlab('Fully Vaccinated Rate')+
+#   ylab('')+
+#   ggtitle('Fully Vaccinated Rate for Countries')
+```
+
+
