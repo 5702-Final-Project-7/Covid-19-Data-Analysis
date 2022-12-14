@@ -9,20 +9,82 @@ library(glue)
 library(ggridges)
 library(colorspace)
 library(ggpubr)
+library("sf")
+library("tidyverse")
+library("leaflet")  
+library("rnaturalearth")
+library("rnaturalearthdata")
+library("riskyr")
+library("scales")
+library("htmltools")
 ```
 
 
 # Results
 
-## Spatial data for cases & deaths
+## Global spatial data for cases & deaths
+```{r}
+load(file = "df_case.Rdata")
+load(file = "df_v.Rdata")
 
-<font color='red'> 
 
-Explanation, code and graphs here.
+world <- ne_countries(scale = "medium", returnclass = "sf")
+class(world)
 
-Feel free to change the subtitle :)
+worldmm<-merge(world,df_case,by.x="iso_a2",by.y="Country_code")
+worldm<-merge(worldmm,df_v,by.x="iso_a3",by.y="ISO3")
 
-</font>
+palc <- colorBin("YlOrRd", domain = worldm$Cases...cumulative.total.per.100000.population)
+labelsc <- sprintf(
+  "<strong>%s</strong><br/> Cumulative cases per 100000: %s ",
+  worldm$name, comma(worldm$Cases...cumulative.total.per.100000.population)) %>% 
+  lapply(HTML)
+
+pald <- colorBin("YlGn", domain = worldm$Deaths...cumulative.total.per.100000.population)
+labelsd <- sprintf(
+  "<strong>%s</strong><br/> Cumulative Deaths per 100000: %s ",
+  worldm$name, comma(worldm$Deaths...cumulative.total.per.100000.population)) %>% 
+  lapply(HTML)
+
+palv <- colorBin("PuBu", domain = worldm$PERSONS_VACCINATED_1PLUS_DOSE_PER100,
+                 bins=c(0,20,40,60,80,100))
+labelsv <- sprintf(
+  "<strong>%s</strong><br/> Persons vaccinated more than one doses per 100: %s ",
+  worldm$name, comma(worldm$PERSONS_VACCINATED_1PLUS_DOSE_PER100)) %>% 
+  lapply(HTML)
+
+
+
+
+case_map<-leaflet(worldm) %>%
+  addProviderTiles("Stamen.TonerLite")%>%
+  addPolygons(
+    # fill
+    fillColor   = ~ palc(Cases...cumulative.total.per.100000.population),
+    fillOpacity = 0.7,
+    # line
+    dashArray   = "3",
+    weight      = 2,
+    color       = "white",
+    opacity     = 1,
+    # interaction
+    highlight = highlightOptions(
+      weight = 5,
+      color = "#666",
+      dashArray = "",
+      fillOpacity = 0.7,
+      bringToFront = TRUE),
+    label = labelsc,
+    labelOptions = labelOptions(
+      style = list("font-weight" = "normal", padding = "3px 8px"),
+      textsize = "15px",
+      direction = "auto")) %>%
+  addLegend(
+    pal = palc, values = ~Cases...cumulative.total.per.100000.population, opacity = 0.7, title = HTML("Cumulative cases per 100000 population"),
+    position = "bottomright")
+setView(case_map,lng=-30, lat=-20, 1)
+
+```
 
 
 ## A Time Series Analysis for Covid-19 Cases and Deaths
