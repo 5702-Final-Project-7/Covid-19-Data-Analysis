@@ -1,8 +1,217 @@
+
 # Data 
+
+
 
 ## Sources
 
+
+### WHO Covid-19 Dashboard
+
+
+### CDC Data for Covid-19
+
+
+
 ## Cleaning / transformation
 
+
+### Covid-19 Cases and Deaths
+
+#### Distribution by Space
+
+Brief explanation and code here
+
+### Distribution by Time
+
+To analyze the global spread of Covid-19, it's helpful to observe the reported cases and deaths as a three-year time series from early 2020 to late 2020. The data is collected from the report of different countries separately, so we first sum them up to obtain the global reported data by day. We notice that there is a delay in data collection on weekends in the data set, which may lead to an undesired cyclic pattern. To deal with that, we also build another data frame by grouping the reported date by week. We believe this weekly reported data frame may bring clearer insights of the data.
+
+We also extract the US data from the global data set, and compute the reported cases and deaths by day and week. It will provide a deeper insight in our following analysis.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+who_daily <- read.csv("https://raw.githubusercontent.com/5702-Final-Project-7/Covid-19-Data-Analysis/main/WHO-COVID-19-global-data.csv")
+# summarize the daily reported data of all the countries
+world_daily <- who_daily %>%
+  group_by(Date_reported) %>%
+  mutate(world_new_cases = sum(New_cases)) %>%
+  mutate(world_new_deaths = sum(New_deaths)) %>%
+  select(c(Date_reported, world_new_cases, world_new_deaths)) %>%
+  distinct()  %>%
+  mutate(Date_reported = as.Date(Date_reported))
+
+
+# summarize the weekly reported data to remove cyclic patterns
+world_weekly <- world_daily %>%
+  mutate(week = as.numeric(floor((Date_reported-as.Date('2020-01-03'))/7))) %>%
+  group_by(week) %>%
+  mutate(weekly_new_cases = sum(world_new_cases)) %>%
+  mutate(weekly_new_deaths = sum(world_new_deaths)) %>%
+  mutate(date_reported = as.Date(as.Date('2020-01-03')+week*7)) %>%
+  select(date_reported,weekly_new_cases,weekly_new_deaths,week) %>%
+  ungroup() %>%
+  distinct()
+
+# us daily reported data
+us_daily <- who_daily %>%
+  filter(Country == 'United States of America') %>%
+  distinct() %>%
+  select(Date_reported, New_cases, New_deaths) %>%
+  mutate(Date_reported = as.Date(Date_reported)) %>%
+  filter(New_deaths >= 0)
+
+# summarize us weekly reported data
+us_weekly <- us_daily %>%
+  mutate(week = as.numeric(floor((Date_reported-as.Date('2020-01-03'))/7))) %>%
+  group_by(week) %>%
+  mutate(weekly_new_cases = sum(New_cases)) %>%
+  mutate(weekly_new_deaths = sum(New_deaths)) %>%
+  mutate(Date_reported = as.Date(as.Date('2020-01-03')+week*7)) %>%
+  select(Date_reported,weekly_new_cases,weekly_new_deaths,week) %>%
+  ungroup() %>%
+  distinct()
+```
+
+
+### US Vaccination Data
+
+#### US Vaccination Compared to the Global Data
+
+To analyze the US vaccination rate, we tried to compare it to those of other countries in the world. We used the WHO global vaccination data, which provides detailed vaccination data divided by countries. For each country, it gives the total vaccinations, the vaccinated rate, fully vaccinated rate as well as the main type of vaccines the country uses. In our analysis, we only care about the vaccinated rate and fully vaccinated rate of different countries. Another issue of the data is missing values and outliers. There's no fully vaccinated rate for Guernsey, and the fully vaccinated rate of Eritrea, Brunei Darussalam, Gibraltar, Palau and Tokelau are more than 100%. So we drop these six rows. 
+
+
+```{r}
+world_vac_df <- read.csv('https://raw.githubusercontent.com/5702-Final-Project-7/Covid-19-Data-Analysis/main/vaccination-data.csv')
+world_vac <- world_vac_df %>%
+  select(COUNTRY,PERSONS_FULLY_VACCINATED_PER100) %>%
+  rename(country=COUNTRY, fully_vaccinated_rate = PERSONS_FULLY_VACCINATED_PER100)
+
+# check and remove missing values and outliers
+na_index <- c(which(is.na(world_vac$fully_vaccinated_rate)),which(world_vac$fully_vaccinated_rate<=0))
+outlier_index <- which(world_vac$fully_vaccinated_rate>100)
+world_vac[c(na_index,outlier_index),]
+world_vac <- world_vac[-c(na_index,outlier_index),]
+
+```
+
+#### Vaccination State in US Populations
+
+We further made use of the global vaccination data set by extracting the US data, and calculating the proportion of vaccination, full vaccination, boosting in the US population. The data frame consists of 5 columns: 'country', 'not_vaccinated', 'vaccinated', 'fully_vaccinated', and 'boosted'. We transformed it to tidy form which only contains 3 columns for further graphing.
+
+
+```{r}
+us_vac <- world_vac_df %>%
+  filter(COUNTRY=='United States of America') %>%
+  select(PERSONS_VACCINATED_1PLUS_DOSE_PER100,
+         PERSONS_FULLY_VACCINATED_PER100,
+         PERSONS_BOOSTER_ADD_DOSE_PER100) %>%
+  rename(vaccinated=PERSONS_VACCINATED_1PLUS_DOSE_PER100,
+         fully_vaccinated=PERSONS_FULLY_VACCINATED_PER100,
+         boosted=PERSONS_BOOSTER_ADD_DOSE_PER100) %>%
+  mutate(not_vaccinated=100-vaccinated) %>%
+  mutate(vaccinated=vaccinated-fully_vaccinated) %>%
+  mutate(fully_vaccinated=fully_vaccinated-boosted) %>%
+  mutate(country='United States of America') %>%
+  pivot_longer(!country)
+```
+
+
+#### US Vaccination by State
+
+Brief explanation here.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+vacraw <- read_csv("https://raw.githubusercontent.com/5702-Final-Project-7/Covid-19-Data-Analysis/main/covid19_vaccinations_us.csv")
+vac_us <- vacraw %>%
+  select(`Jurisdiction (State/Territory) or Federal Entity`, 
+         `Percent of total pop with a completed primary series`) %>%
+  rename(state = `Jurisdiction (State/Territory) or Federal Entity`,
+         fully_vaccinated_rate = `Percent of total pop with a completed primary series`)
+
+vac_us[vac_us == "N/A"] <- NA
+vaccinated_us <- na.omit(vac_us)
+vaccinated_us[, c(2)] <- sapply(vaccinated_us[, c(2)], as.numeric)
+```
+
+#### Vaccination and Reported Cases
+
+Brief explanation here.
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+dosesraw <- read_csv("https://raw.githubusercontent.com/govex/COVID-19/master/data_tables/vaccine_data/global_data/time_series_covid19_vaccine_doses_admin_global.csv")
+
+doses_1 <- dosesraw %>%
+  select(-(UID:`Admin2`)) %>%
+  select(-(Combined_Key)) %>%
+  select(-(Population)) %>%
+  rename(Long = `Long_`)
+
+doses <- doses_1 %>%
+  pivot_longer(-c(`Province_State`, `Country_Region`, Lat, Long),
+               names_to = "date",
+               values_to = "doses_n") %>%
+  select(-c(Lat, Long)) %>%
+  rename(province_state = `Province_State`,
+         country_region = `Country_Region`) %>%
+  mutate(date = ymd(date)) %>%
+  group_by(country_region, date) %>%
+  summarise(doses_n = sum(doses_n)) %>%
+  ungroup()
+
+new_dose <- doses %>%
+  arrange(date) %>%
+  group_by(country_region) %>%
+  mutate(new_doses_n = doses_n - lag(doses_n, default = 0)) %>%
+  ungroup() %>%
+  as.data.frame(sapply(new_dose, function(x) gsub("\"", "", x)))
+
+new_dose[is.na(new_dose)] <- 0
+
+weekly_dose <- new_dose %>%
+  mutate(week = as.numeric(floor((date-as.Date('2020-12-29'))/7))) %>%
+  group_by(week) %>%
+  mutate(weekly_new_doses = sum(new_doses_n)) %>%
+  mutate(date = as.Date(as.Date('2020-12-29') + week * 7)) %>%
+  ungroup() %>%
+  distinct()
+```
+
+
+```{r}
+caseraw <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv")
+
+case <- caseraw %>%
+  pivot_longer(-c(`Province/State`, `Country/Region`, Lat, Long),
+               names_to = "date",
+               values_to = "confirmed_n") %>%
+  select(-c(Lat, Long)) %>%
+  rename(province_state = `Province/State`,
+         country_region = `Country/Region`) %>%
+  mutate(date = mdy(date)) %>%
+  group_by(country_region, date) %>%
+  summarise(confirmed_n = sum(confirmed_n)) %>%
+  ungroup()
+
+new_case <- case %>%
+  arrange(date) %>%
+  group_by(country_region) %>%
+  mutate(new_cases_n = confirmed_n - lag(confirmed_n, default = 0)) %>%
+  ungroup()
+
+weekly_case <- new_case %>%
+  mutate(week = as.numeric(floor((date-as.Date('2020-01-22'))/7))) %>%
+  group_by(week) %>%
+  mutate(weekly_new_cases = sum(new_cases_n)) %>%
+  mutate(date = as.Date(as.Date('2020-01-22') + week * 7)) %>%
+  ungroup() %>%
+  distinct()
+
+weekly_merge <- merge(weekly_case, weekly_dose, by=c("country_region","date"), all=TRUE)
+```
+
+
 ## Missing value analysis
+
+
+
+
 

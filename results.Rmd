@@ -1,1 +1,280 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(scales)
+library(lubridate)
+library(glue)
+library(ggridges)
+library(colorspace)
+library(ggpubr)
+```
+
+
 # Results
+
+## Spatial data for cases & deaths
+
+<font color='red'> 
+
+Explanation, code and graphs here.
+
+Feel free to change the subtitle :)
+
+</font>
+
+
+## A Time Series Analysis for Covid-19 Cases and Deaths
+
+Covid-19 started at the beginning of 2020, and spread quickly accross the world. To analyze the overall spread pattern of the pademic, we analyze the global cases and deaths data as a time series. By plotting the time series by day, we observed a strong cyclic pattern, making the data very noisy. This is because of the delay of data update during weekends of the original dataset. To remove the cyclic pattern, it's better to use the weekly time series.
+
+From the two weekly time series, we observed the following patterns.
+
+* The first spike of reported deaths appeared in April 2020, with no spike in reported cases at the same time. This refer to the early spread in China. The low cases and high deaths also indicate the high fatality rate of the virus at the beginning.
+
+* In January 2021, both the reported cases and reported deaths experience a relatively strong spike. During this time, the has pandemic spreaded worldwide, and contries in Europe and America are experiencing a high infection rate of Covid-19.
+
+* The reported cases and deaths began decreasing slowly with vaccination being available since December 2020.
+
+* The most outstanding spike of reported cases appeared in January 2022, with over 20 million weekly new cases around the world. This was over four times of that in January 2021. This was exactly the time when Omicron variant spread drastically accross the world. However, the report deaths did not increase that much at the mean time, from which we could conclude that Omicron spreads more easily than earlier variants, but causes less severe illness and death in general.
+
+```{r}
+# global new cases by day
+p1 <- ggplot(world_daily,aes(Date_reported,world_new_cases))+
+  geom_line(color='darkred')+
+  scale_x_date(breaks = function(x) seq.Date(from = min(x), to = max(x), by = "4 months"),
+               labels = function(x) paste(lubridate::year(x),'-',lubridate::month(x), sep=''))+
+  xlab('Date Reported')+
+  ylab('New Cases')+
+  ggtitle('Global Daily New Cases')+
+  theme_light()
+
+# global new cases by week
+p2 <- ggplot(world_weekly, aes(date_reported,weekly_new_cases))+
+  geom_line(color='darkred')+
+  scale_x_date(breaks = function(x) seq.Date(from = min(x), to = max(x), by = "4 months"),
+               labels = function(x) paste(lubridate::year(x),'-',lubridate::month(x), sep=''))+
+  xlab('Date Reported')+
+  ylab('New Cases')+
+  ggtitle('Global Weekly New Cases')+
+  theme_light()
+
+# global new deaths by day
+p3 <- ggplot(world_daily, aes(Date_reported,world_new_deaths))+
+  geom_line(color='steelblue')+
+  scale_x_date(breaks = function(x) seq.Date(from = min(x), to = max(x), by = "4 months"),
+               labels = function(x) paste(lubridate::year(x),'-',lubridate::month(x), sep=''))+
+  xlab('Date Reported')+
+  ylab('Deaths')+
+  ggtitle('Global Daily New Deaths')+
+  theme_light()
+
+# global new deaths by week
+p4 <- ggplot(world_weekly, aes(date_reported,weekly_new_deaths))+
+  geom_line(color='steelblue')+
+  scale_x_date(breaks = function(x) seq.Date(from = min(x), to = max(x), by = "4 months"),
+               labels = function(x) paste(lubridate::year(x),'-',lubridate::month(x), sep=''))+
+  xlab('Date Reported')+
+  ylab('Deaths')+
+  ggtitle('Global Weekly New Deaths')+
+  theme_light()
+
+p <- ggarrange(p1, p3, p2, p4,ncol = 2,nrow=2)
+p
+```
+
+
+<font color='red'>  
+
+Time series for US Cases & Deaths
+
+Explanations here.
+
+</font>
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+p1 <- ggplot(us_daily, aes(x = Date_reported, y = New_cases)) +
+  geom_line(color = "darkred") +
+  scale_x_date(breaks = function(x) seq.Date(from = min(x), to = max(x), by = "4 months"),
+               labels = function(x) paste(lubridate::year(x),'-',lubridate::month(x), sep=''))+
+  xlab('Date Reported')+
+  ylab('New Cases')+
+  ggtitle('US Daily New Cases')+
+  theme_light() +
+  theme(legend.position="bottom",plot.title = element_text(hjust = 0.5))
+
+  
+p2 <- ggplot(us_daily, aes(x = Date_reported, y = New_deaths)) +
+  geom_line(color = "steelblue") +
+  scale_x_date(breaks = function(x) seq.Date(from = min(x), to = max(x), by = "4 months"),
+               labels = function(x) paste(lubridate::year(x),'-',lubridate::month(x), sep=''))+
+  xlab('Date Reported')+
+  ylab('New Deaths')+
+  ggtitle('US Daily New Deaths')+
+  theme_light() +
+  theme(legend.position="bottom",plot.title = element_text(hjust = 0.5))
+
+
+p3 <- ggplot(us_weekly,aes(x = Date_reported, y = weekly_new_cases)) +
+  geom_line(color = "darkred") +
+  scale_x_date(breaks = function(x) seq.Date(from = min(x), to = max(x), by = "4 months"),
+               labels = function(x) paste(lubridate::year(x),'-',lubridate::month(x), sep=''))+
+  xlab('Date Reported')+
+  ylab('New Cases')+
+  ggtitle('US Weekly New Cases')+
+  theme_light() +
+  theme(legend.position="bottom",plot.title = element_text(hjust = 0.5))
+
+
+p4 <- ggplot(us_weekly, aes(x = Date_reported, y = weekly_new_deaths)) +
+  geom_line(color = "steelblue") +
+  scale_x_date(breaks = function(x) seq.Date(from = min(x), to = max(x), by = "4 months"),
+               labels = function(x) paste(lubridate::year(x),'-',lubridate::month(x), sep=''))+
+  xlab('Date Reported')+
+  ylab('New Deaths')+
+  ggtitle('US Weekly New Deaths')+
+  theme_light() +
+  theme(legend.position="bottom",plot.title = element_text(hjust = 0.5))
+
+p <- ggarrange(p1, p2, p3, p4,ncol = 2,nrow=2)
+p
+
+```
+
+## Understanding the Vaccination in the US
+
+In this section, we focus on the US Covid-19 vaccination data. By analyzing and visualizing the data, we try to answer the following questions - what is the overall level of US vaccination comparing to global data? How many Americans have been fully vaccinated while how many of them haven't taken any vaccination? Which state has the highest vaccination rate?
+
+We first draw a boxplot of the fully vaccinated rate of different countries across the world. The median of global fully vaccinated rate is 61.165, while the US fully vaccinated rate is 67.989, which is between the median and third quantile of the global data.
+
+```{r}
+ggplot(world_vac, aes(x=fully_vaccinated_rate)) +
+  geom_boxplot()+
+  geom_segment(x=67.789,xend=67.789,y=-0.37,yend=0.37,color='red',linetype='dotted')+
+  geom_text(aes(x=73, label="\nUnited States: 67.989", y=0.3), color="red",size=3)+
+  ggtitle('US Fully Vaccinated Rate Comparing to Global Data') +
+  xlab('Fully Vaccinated Rate')+
+  ylab('')+
+  theme(legend.title=element_blank())+
+  coord_flip()+
+  theme_light()
+```
+
+To understand the different vaccination state of the US population, we produced a stacked bar chart. we observed that 68% of the US population has been fully vaccinated, among which 33.7% of the population has taken the booster. However, there are still 20.3% of the population who have not taken any vaccine.
+
+```{r}
+us_vac$country <- rep('',4)
+ggplot(us_vac, aes(country,value,fill=fct_rev(name)))+
+  geom_col()+
+  geom_text(aes(x=1, label="33.7%", y=26), color="black",size=4)+
+  geom_text(aes(x=1, label="34.3%", y=60), color="black",size=4)+
+  geom_text(aes(x=1, label="11.7%", y=74), color="black",size=4)+
+  geom_text(aes(x=1, label="20.3%", y=94), color="black",size=4)+
+  xlab('')+
+  ylab('Proportion')+
+  ggtitle('Vaccination State of US Population')+
+  scale_fill_discrete_sequential(palette = "Terrain2")+
+  theme(plot.margin=unit(rep(2,8),'cm'))+
+  theme_light()+
+  theme(legend.title=element_blank())+
+  coord_flip()
+```
+
+A deeper insight of the vaccination in the US would be dividing the total population by age groups. From the grouped bar chart below, both the vaccinated and fully vaccinated rate grow with the age groups. People aged over 65 have the highest fully vaccinated rate of 88.6% and vaccinated rate of 95%. This is reasonable because the old people are more prone to be infected by the virus, so they are more likely to take the complete series of vaccines. Children less than 12 years are too young so their parents may worry about the side effects of the vaccine, so they have a lowest fully vaccinated rate of 16.7% and a vaccinated rate of 25.6%.
+
+```{r}
+ggplot(vac_age_long, aes(fct_relevel(age,'5 - 11 Years'),value,fill=name)) +
+  geom_col(position=position_dodge(),alpha=0.6) +
+  geom_text(aes(label=value), position=position_dodge(width=0.9), vjust=-0.3,size=3)+
+  xlab('Ages')+
+  ylab('Vaccinated Rate') +
+  ggtitle('Vaccinatied and Reported Case Rate by Age')+
+  scale_fill_discrete(name='')+ 
+  theme_light()
+```
+
+<font color='red'>
+Brief explanation here
+</font>
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+us_vac_density <- vaccinated_us %>%
+  filter(state == 'United States') %>%
+  mutate(color = 'red')
+
+ggplot(vaccinated_us, aes(fully_vaccinated_rate)) +
+  geom_density(fill = "pink",alpha = .3) +
+  geom_vline(aes(xintercept = fully_vaccinated_rate),
+             data = us_vac_density, color = 'red',linetype = 'dotted')+
+  geom_text(aes(x = 75, label="\nUS Average: 68.9%", y=0.012), color="red")+
+  ggtitle("US States Fully Vaccinated Rate") +
+  theme(plot.title = element_text(hjust = .5))+
+  xlab('Fully Vaccinated Rate')
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+ggplot(vaccinated_us, aes(x = fully_vaccinated_rate)) +
+  geom_boxplot()+
+  geom_segment(x=68.9,xend=68.9,y=-0.37,yend=0.37,color='red',linetype='dotted')+
+  geom_text(aes(x=71, label="\nUS Average: 68.9%", y=0.3), color="red",size=3)+
+  ggtitle('US Average Fully Vaccinated Rate Comparing to States') +
+  theme(legend.position="bottom", plot.title = element_text(hjust = .5)) +
+  xlab('Fully Vaccinated Rate')+
+  ylab('')+
+  theme(legend.title=element_blank())+
+  coord_flip()+
+  theme_light()
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+theme_dotplot <- 
+  theme_bw(16) +
+  theme(axis.text.y = element_text(size = rel(.8)), axis.ticks.y = element_blank(),
+        axis.title.x = element_text(), axis.text = element_text(face = "bold"),
+        plot.background = element_rect(fill = "lightcyan2"),
+        panel.background = element_rect(fill = "moccasin"),
+        panel.grid.major.x = element_line(size = 0.5),
+        panel.grid.major.y = element_line(size = 0.5, color = "lightblue"),
+        panel.grid.minor.x = element_blank(),
+        strip.text = element_text(size = rel(.7)), legend.position = "top")
+
+vaccinated_us <- vaccinated_us |> 
+  mutate(Panel = cut(fully_vaccinated_rate, 5, breaks = fivenum(fully_vaccinated_rate),
+                     labels = c("<59.5%", "59.5% - 66.5%", "66.5% - 75.0%", ">76.5%")))  |> 
+  mutate(Panel = fct_rev(Panel))
+
+ggplot(vaccinated_us, aes(x = fully_vaccinated_rate, y = reorder(state, fully_vaccinated_rate))) +
+  geom_point() +
+  facet_wrap(~Panel, scales = "free") +
+  ggtitle("% of People Fully Vaccinated by States") +
+  theme(plot.title = element_text(hjust = .5))+
+  xlab("% of People Fully Vaccinated") +
+  ylab("") +
+theme_dotplot
+```
+
+## How Does Vaccination Influence Covid-19 Cases?
+
+<font color='red'>
+Explanation here.
+
+Feel free to change this section :)
+</font>
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+weekly_merge %>% filter(country_region == "US") %>%
+  ggplot(aes(x = date)) +
+  geom_line(aes(y = doses_n), color = "darkred") +
+  labs(y = 'Doses', x = 'Months') +
+  geom_line(aes(y = confirmed_n/0.025), color="steelblue", linetype="twodash") +
+  scale_x_date(date_breaks = "3 month",date_labels = "%b%y") +
+  scale_y_continuous(sec.axis = sec_axis(~.*0.025, name = "Cases")) +
+  theme_light() +
+  theme(legend.position="bottom",plot.title = element_text(hjust = 0.5)) +
+  scale_color_manual(name="Doses",
+  values =  c("steelblue","darkred"),breaks = c("Doses", "Cases")) +
+  ggtitle("Covid-19 Cases vs Doses in United States")
+```
+
