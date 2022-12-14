@@ -1,3 +1,82 @@
+--- 
+title: "Covid-19 Data Analysis"
+author: "Weipeng Li, Ruochen Zhang, Yujia Chen"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+---
+--- 
+title: "Covid-19 Data Analysis"
+author: "Weipeng Li, Ruochen Zhang, Yujia Chen"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+---
+```{r include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+
+# Introduction
+
+
+<!--chapter:end:index.Rmd-->
+
+
+# Proposal
+
+Placeholder
+
+
+## Research topic
+## Data availability
+### The WHO coronavirus (COVID-19) dashboard 
+#### Data source
+#### Data format
+#### Frequency of updates
+### U.S. COVID-19 Data- JHU
+#### Description
+#### Data source
+#### Data format
+#### Frequency of updates
+#### Delays in death reports
+### National Bureau of Statistics of China
+#### Data source
+#### Data format
+#### Frequency of updates
+
+<!--chapter:end:proposal.Rmd-->
+
+
+# Data 
+
+Placeholder
+
+
+## Sources
+### WHO Covid-19 Dashboard
+### CDC Data for Covid-19
+## Cleaning / transformation
+### Covid-19 Cases and Deaths
+#### Distribution by Space
+### Distribution by Time
+### US Vaccination Data
+#### US Vaccination Compared to the Global Data
+#### Vaccination State in US Populations
+#### US Vaccination by State
+#### Vaccination and Reported Cases
+## Missing value analysis
+
+<!--chapter:end:data.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
@@ -400,4 +479,28 @@ weekly_merge %>% filter(country_region == "US") %>%
   values =  c("steelblue","darkred"),breaks = c("Doses", "Cases")) +
   ggtitle("Covid-19 Cases vs Doses in United States")
 ```
+
+
+<!--chapter:end:results.Rmd-->
+
+
+# Interactive component
+
+Placeholder
+
+
+
+<!--chapter:end:interactive.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+```
+# Conclusion
+
+
+<!--chapter:end:conclusion.Rmd-->
 
