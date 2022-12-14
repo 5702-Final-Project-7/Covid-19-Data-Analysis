@@ -23,3 +23,17 @@ missing-value-analysis
 results
 interactive-component
 conclusion
+who-covid-19-dashboard
+cdc-data-for-covid-19
+covid-19-cases-and-deaths
+distribution-by-space
+distribution-by-time
+us-vaccination-data
+us-vaccination-compared-to-the-global-data
+vaccination-state-in-us-populations
+us-vaccination-by-state
+vaccination-and-reported-cases
+spatial-data-for-cases-deaths
+a-time-series-analysis-for-covid-19-cases-and-deaths
+understanding-the-vaccination-in-the-us
+how-does-vaccination-influence-covid-19-cases

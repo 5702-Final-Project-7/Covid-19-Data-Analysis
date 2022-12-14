@@ -1,3 +1,149 @@
 # Interactive component
 
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<script src="https://d3js.org/d3.v7.js"></script>
+<script>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Interactive D3</title>
+    <script src="https://d3js.org/d3.v7.js">  </script>
+  </head>
+
+<body>
+
+<div>
+
+<h3>Interactive global weekly new reported cases from 2020.01 to 2022.11</h3>
+
+<p>(Hover over points for dates.)</p>
+
+</div>
+
+ <script type="text/javascript">
+ 
+      //Width and height
+      var w = 1000;
+      var h = 600;
+      var margin = {top: 25, right: 50, bottom: 50, left: 150};
+      var innerHeight = h - margin.top - margin.bottom;
+      var innerWidth = w - margin.left - margin.right;
+
+      // create SVG element
+      var svg = d3.select("body")
+          .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+            
+      // create background rectangle
+      svg.append("rect")
+        .attr("width", w)
+        .attr("height", h)
+        .attr("fill", "#e7f5fe");
+        
+      // create caption
+      d3.select("body")  
+        .append("div")
+          .style("padding", "10px")
+        .append("a")
+        .text("Data source: https://covid19.who.int/data");
+        
+      // create plot group  
+      svg.append("g")
+          .attr("id", "plot")
+          .attr("transform", `translate (${margin.left}, ${margin.top})`);
+          
+const rowConverter = function (d) {
+return { date:d.date_reported,
+
+cases:+d.weekly_new_cases,
+
+week:+d.week
+
+}
+
+};
+
+d3.csv("https://raw.githubusercontent.com/5702-Final-Project-7/Covid-19-Data-Analysis/main/worldweekly.csv").then(function(data) {
+  
+  console.log(d3.min(data.map(d => d.week)));
+  console.log(d3.max(data.map(d => d.week)));
+  xScale = d3.scaleLinear()
+                 .domain([0,155])
+                 .range([0, innerWidth]);
+
+
+
+yScale = d3.scaleLinear()
+                 .domain([0,23963687])
+                 .range([innerHeight,0]);
+                 
+                 
+xAxis = d3.axisBottom()
+          .scale(xScale);
+          
+yAxis = d3.axisLeft()
+          .scale(yScale);
+          
+svg.select("g#plot")
+          .selectAll("circle")
+          .data(data)
+          .enter()
+          .append("circle")
+            .attr("cx", d => xScale(d.week))
+            .attr("cy", d => yScale(d.weekly_new_cases))
+            .attr("r", 3)
+            .on("mouseover", function(event, d) {
+                var xcoord = +d3.select(event.currentTarget).attr("cx") + 5
+                var ycoord = +d3.select(event.currentTarget).attr("cy") - 5
+                svg.select("g#plot")
+                  .append("text")
+                  .attr("id", "tooltip")
+                  .attr("x", xcoord)
+                  .attr("y", ycoord)
+                  .text( d.date_reported)                     })
+             .on("mouseout", function() {
+                 d3.select("#tooltip").remove();
+             }
+             );
+      
+      svg.select("g#plot")
+          .append("g")
+          .attr("id", "xaxis")
+          .attr("transform", `translate (0, ${innerHeight})`)
+          .call(xAxis);
+          
+      // create x-axis label
+        svg.select("g#plot")
+          .append("text") 
+            .attr("id", "xlab")
+            .attr("x", innerWidth/2)
+            .attr("y", innerHeight + .75 * margin.bottom)
+            .attr("text-anchor", "middle")
+            .text("Weeks");
+      
+      svg.select("g#plot")
+          .append("g")
+          .call(yAxis)   
+          
+          
+      svg.select("g#plot")
+          .append("text") 
+            .attr("id", "ylab")
+            .attr("x", -50)
+            .attr("y", innerHeight/2+20)
+            .attr("text-anchor", "middle")
+            .text("Cases Reported");
+     
+            
+        
+     
+})
+ </script>
+  </body>
+</html>
+</script>

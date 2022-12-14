@@ -48,6 +48,7 @@ world_weekly <- world_daily %>%
   select(date_reported,weekly_new_cases,weekly_new_deaths,week) %>%
   ungroup() %>%
   distinct()
+#write.csv(world_weekly,"worldweekly.csv")
 
 head(world_daily)
 head(world_weekly)

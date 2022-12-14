@@ -23,7 +23,7 @@
 <meta name="author" content="Weipeng Li, Ruochen Zhang, Yujia Chen" />
 
 
-<meta name="date" content="2022-11-01" />
+<meta name="date" content="2022-12-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -85,11 +85,26 @@
 </ul></li>
 <li class="chapter" data-level="3" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>3</b> Data</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#sources"><i class="fa fa-check"></i><b>3.1</b> Sources</a></li>
-<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#cleaning-transformation"><i class="fa fa-check"></i><b>3.2</b> Cleaning / transformation</a></li>
+<li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#sources"><i class="fa fa-check"></i><b>3.1</b> Sources</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="data.html"><a href="data.html#who-covid-19-dashboard"><i class="fa fa-check"></i><b>3.1.1</b> WHO Covid-19 Dashboard</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data.html"><a href="data.html#cdc-data-for-covid-19"><i class="fa fa-check"></i><b>3.1.2</b> CDC Data for Covid-19</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#cleaning-transformation"><i class="fa fa-check"></i><b>3.2</b> Cleaning / transformation</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="data.html"><a href="data.html#covid-19-cases-and-deaths"><i class="fa fa-check"></i><b>3.2.1</b> Covid-19 Cases and Deaths</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data.html"><a href="data.html#distribution-by-time"><i class="fa fa-check"></i><b>3.2.2</b> Distribution by Time</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data.html"><a href="data.html#us-vaccination-data"><i class="fa fa-check"></i><b>3.2.3</b> US Vaccination Data</a></li>
+</ul></li>
 <li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#missing-value-analysis"><i class="fa fa-check"></i><b>3.3</b> Missing value analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a></li>
+<li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="results.html"><a href="results.html#spatial-data-for-cases-deaths"><i class="fa fa-check"></i><b>4.1</b> Spatial data for cases &amp; deaths</a></li>
+<li class="chapter" data-level="4.2" data-path="results.html"><a href="results.html#a-time-series-analysis-for-covid-19-cases-and-deaths"><i class="fa fa-check"></i><b>4.2</b> A Time Series Analysis for Covid-19 Cases and Deaths</a></li>
+<li class="chapter" data-level="4.3" data-path="results.html"><a href="results.html#understanding-the-vaccination-in-the-us"><i class="fa fa-check"></i><b>4.3</b> Understanding the Vaccination in the US</a></li>
+<li class="chapter" data-level="4.4" data-path="results.html"><a href="results.html#how-does-vaccination-influence-covid-19-cases"><i class="fa fa-check"></i><b>4.4</b> How Does Vaccination Influence Covid-19 Cases?</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>5</b> Interactive component</a></li>
 <li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
 <li class="divider"></li>
@@ -113,6 +128,146 @@
             <section class="normal" id="section-">
 <div id="interactive-component" class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Interactive component<a href="interactive-component.html#interactive-component" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<script src="https://d3js.org/d3.v7.js"></script>
+<script>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Interactive D3</title>
+    <script src="https://d3js.org/d3.v7.js">  </script>
+</head>
+<body>
+<div>
+<h3>
+Interactive global weekly new reported cases from 2020.01 to 2022.11
+</h3>
+<p>
+(Hover over points for dates.)
+</p>
+</div>
+<script type="text/javascript">
+ 
+      //Width and height
+      var w = 1000;
+      var h = 600;
+      var margin = {top: 25, right: 50, bottom: 50, left: 150};
+      var innerHeight = h - margin.top - margin.bottom;
+      var innerWidth = w - margin.left - margin.right;
+
+      // create SVG element
+      var svg = d3.select("body")
+          .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+            
+      // create background rectangle
+      svg.append("rect")
+        .attr("width", w)
+        .attr("height", h)
+        .attr("fill", "#e7f5fe");
+        
+      // create caption
+      d3.select("body")  
+        .append("div")
+          .style("padding", "10px")
+        .append("a")
+        .text("Data source: https://covid19.who.int/data");
+        
+      // create plot group  
+      svg.append("g")
+          .attr("id", "plot")
+          .attr("transform", `translate (${margin.left}, ${margin.top})`);
+          
+const rowConverter = function (d) {
+return { date:d.date_reported,
+
+cases:+d.weekly_new_cases,
+
+week:+d.week
+
+}
+
+};
+
+d3.csv("https://raw.githubusercontent.com/5702-Final-Project-7/Covid-19-Data-Analysis/main/worldweekly.csv").then(function(data) {
+  
+  console.log(d3.min(data.map(d => d.week)));
+  console.log(d3.max(data.map(d => d.week)));
+  xScale = d3.scaleLinear()
+                 .domain([0,155])
+                 .range([0, innerWidth]);
+
+
+
+yScale = d3.scaleLinear()
+                 .domain([0,23963687])
+                 .range([innerHeight,0]);
+                 
+                 
+xAxis = d3.axisBottom()
+          .scale(xScale);
+          
+yAxis = d3.axisLeft()
+          .scale(yScale);
+          
+svg.select("g#plot")
+          .selectAll("circle")
+          .data(data)
+          .enter()
+          .append("circle")
+            .attr("cx", d => xScale(d.week))
+            .attr("cy", d => yScale(d.weekly_new_cases))
+            .attr("r", 3)
+            .on("mouseover", function(event, d) {
+                var xcoord = +d3.select(event.currentTarget).attr("cx") + 5
+                var ycoord = +d3.select(event.currentTarget).attr("cy") - 5
+                svg.select("g#plot")
+                  .append("text")
+                  .attr("id", "tooltip")
+                  .attr("x", xcoord)
+                  .attr("y", ycoord)
+                  .text( d.date_reported)                     })
+             .on("mouseout", function() {
+                 d3.select("#tooltip").remove();
+             }
+             );
+      
+      svg.select("g#plot")
+          .append("g")
+          .attr("id", "xaxis")
+          .attr("transform", `translate (0, ${innerHeight})`)
+          .call(xAxis);
+          
+      // create x-axis label
+        svg.select("g#plot")
+          .append("text") 
+            .attr("id", "xlab")
+            .attr("x", innerWidth/2)
+            .attr("y", innerHeight + .75 * margin.bottom)
+            .attr("text-anchor", "middle")
+            .text("Weeks");
+      
+      svg.select("g#plot")
+          .append("g")
+          .call(yAxis)   
+          
+          
+      svg.select("g#plot")
+          .append("text") 
+            .attr("id", "ylab")
+            .attr("x", -50)
+            .attr("y", innerHeight/2+20)
+            .attr("text-anchor", "middle")
+            .text("Cases Reported");
+     
+            
+        
+     
+})
+ </script>
+</body>
+</html>
+</script>
 
 </div>
             </section>
