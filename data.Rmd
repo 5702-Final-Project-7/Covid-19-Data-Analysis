@@ -19,6 +19,8 @@
 ### Covid-19 Cases and Deaths
 
 #### Distribution by Space
+The cumulative cases and deaths data from WHO can be loaded from the csv files directly. Then we select infection rates, fatality rates, country names and country iso numbers from the data frame. For the vaccine data, we load the csv file and select country names, country numbers and persons with 1+ doses of 100 population from the data frame. Then we store the data frames in Rdata files for future use. 
+
 
 ```{r}
 library("tidyverse")
