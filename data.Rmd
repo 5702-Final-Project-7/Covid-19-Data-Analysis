@@ -22,7 +22,7 @@ The global confirmed cases data provides the daily confirmed cases, reported at 
 
 ## Cleaning / transformation
 
-### CCOVID-19 Cases and Deaths
+### COVID-19 Cases and Deaths
 
 #### Distribution by Space
 
@@ -237,7 +237,7 @@ weekly_merge <- merge(weekly_case, weekly_dose, by=c("country_region","date"), a
 
 ## Missing value analysis
 
-### WHO Covid-19 dashboard
+### WHO COVID-19 dashboard
 
 There are no NAN values in the cumulative cases and deaths data. But there are 4 countries/regions with 0 cases and deaths.They are Democratic People's Republic of Korea, Saint Helena, Tokelau and Turkmenistan. It implies that they didn't report to the WHO and their data are missing. There is a category "other" in the table and it may contain data of countries not included in the 237 countries/ regions.
 
@@ -256,5 +256,5 @@ vis_miss(doses)
 gg_miss_fct(doses, date)
 ```
 
-As we can see from the chart, the missing values consist of 3.4% of the dataset. It is a univariate missing pattern where missing data occur only in doses_n. There are about 70% missing data around January 2021. Missing data gradually decrease over time and remain very low starting from June 2021. The main reason could many countries lack access to vaccines at the beginning of the approval of covid-19 vaccines due to the delays and shortages. Many countries have sufficient vaccines over time, the missing data decrease as well.
+As we can see from the chart, the missing values consist of 3.4% of the dataset. It is a univariate missing pattern where missing data occur only in doses_n. There are about 70% missing data around January 2021. Missing data gradually decrease over time and remain very low starting from June 2021. The main reason could many countries lack access to vaccines at the beginning of the approval of COVID-19 vaccines due to the delays and shortages. Many countries have sufficient vaccines over time, the missing data decrease as well.
 
