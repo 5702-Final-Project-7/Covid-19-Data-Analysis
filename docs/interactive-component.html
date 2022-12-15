@@ -23,7 +23,7 @@
 <meta name="author" content="Weipeng Li, Ruochen Zhang, Yujia Chen" />
 
 
-<meta name="date" content="2022-12-14" />
+<meta name="date" content="2022-12-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -131,7 +131,7 @@
             <section class="normal" id="section-">
 <div id="interactive-component" class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Interactive component<a href="interactive-component.html#interactive-component" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Here we present an interactive version of the global weekly new reported cases from 2020.01 to 2022.11. When we hover the mouse on the data points, we cans ee the detailed date. In this way we can determine the date of the data points easily, especially for the peaks and troughs.</p>
+<p>Here we present an interactive version of the global weekly new reported cases from 2020.01 to 2022.11. When we hover the mouse on the data points, we can see the detailed date. In this way we can determine the date of the data points easily, especially for the peaks and troughs. We replace the x axis with number of weeks since outbreaks to provide more information.</p>
 <script src="https://d3js.org/d3.v7.js"></script>
 <script>
 <html lang="en">
@@ -149,17 +149,19 @@ Interactive global weekly new reported cases from 2020.01 to 2022.11
 (Hover over points for dates.)
 </p>
 </div>
+<p><g></p>
+<p></g></p>
 <script type="text/javascript">
  
       //Width and height
-      var w = 1000;
-      var h = 600;
+      var w = 800;
+      var h = 400;
       var margin = {top: 25, right: 50, bottom: 50, left: 150};
       var innerHeight = h - margin.top - margin.bottom;
       var innerWidth = w - margin.left - margin.right;
 
       // create SVG element
-      var svg = d3.select("body")
+      var svg = d3.select("g")
           .append("svg")
             .attr("width", w)
             .attr("height", h);
@@ -223,7 +225,7 @@ svg.select("g#plot")
             .attr("cy", d => yScale(d.weekly_new_cases))
             .attr("r", 3)
             .on("mouseover", function(event, d) {
-                var xcoord = +d3.select(event.currentTarget).attr("cx") + 5
+                var xcoord = +d3.select(event.currentTarget).attr("cx") - 30
                 var ycoord = +d3.select(event.currentTarget).attr("cy") - 5
                 svg.select("g#plot")
                   .append("text")
