@@ -24,6 +24,13 @@ library(grid)
 # Results
 
 ## Global spatial data for cases & deaths
+Here we present the global map of cumulative cases per 100000 population, deaths per 100000 population, and persons vaccinated 1+ doses per 100 population. The map is interactive. Put the mouse over a particular area, and the detailed data will appear. The maps can be zoomed in by clicking the buttons on the left and be dragged by holding the left button of the mouse. The data is updated on 2022/12/05.
+
+We can see from the graphs that European countries show high infection rates, followed by the Americas. The reported infection rate in Asia and Africa is relatively late.  The bordering countries show similar infection rates, while the countries with strict covid-19 policies show lower rates compared to surrounding countries, for instance, China.  It has been noted on the WHO website that the case and death data for the Region of Africa are incomplete. Therefore the actual infection rates in Africa may be higher than reported.
+
+Countries with high infection rates are more likely to report more deaths. For the vaccination data, we can see that countries in Europe and in the Americas tend to show higher vaccination rates, which are the richer countries with more medical resources.
+
+We find from the data that the death rates are relatively high in the US compared to countries with similar or even higher infection rates in Europe. For example, the infection rate in the US is 29491/100000, and the death rate is 324/100000, while the figures for France are 566638/100000 and 238/100000. We first infer that it may be caused by the difference in calculating death cases. In the US, if COVID-19 appears among the causes and contributors, CDC guidance counts that as a COVID-19-related death. Some countries in Europe record solely deaths of those who have been tested and that occurred in the hospital. But for countries like France and German, their case numbers include those who died "of" COVID-19 and those who died "with" the disease, both in hospitals and care houses. The United Kingdom has been reporting all deaths after a positive test within 60 days as a coronavirus death. So the different counting methods in Europe may not be the main cause of the lower rates of deaths here. The reasons behind these differences may be complicated. From the data we have now, the US shows similar vaccination rates, and the differences may be caused by medical resources, various types of social distance measures, and time affected by Covid-19.
 
 ```{r}
 load(file = "df_case.Rdata")
