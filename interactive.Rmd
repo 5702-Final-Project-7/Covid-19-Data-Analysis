@@ -51,7 +51,7 @@ knitr::opts_chunk$set(echo = TRUE)
         .attr("fill", "#e7f5fe");
         
       // create caption
-      d3.select("body")  
+      d3.select("g")  
         .append("div")
           .style("padding", "10px")
         .append("a")
