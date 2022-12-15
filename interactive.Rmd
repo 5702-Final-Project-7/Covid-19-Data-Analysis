@@ -1,11 +1,13 @@
 # Interactive component
-
+Here we present an interactive version of the global weekly new reported cases from 2020.01 to 2022.11. When we hover the mouse on the data points, we cans ee the detailed date. In this way we can determine the date of the data points easily, especially for the peaks and troughs. 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 <script src="https://d3js.org/d3.v7.js"></script>
+
+
 <script>
 <html lang="en">
   <head>
@@ -134,7 +136,7 @@ svg.select("g#plot")
       svg.select("g#plot")
           .append("text") 
             .attr("id", "ylab")
-            .attr("x", -50)
+            .attr("x", -60)
             .attr("y", innerHeight/2+20)
             .attr("text-anchor", "middle")
             .text("Cases Reported");

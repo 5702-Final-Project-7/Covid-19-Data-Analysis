@@ -37,3 +37,5 @@ spatial-data-for-cases-deaths
 a-time-series-analysis-for-covid-19-cases-and-deaths
 understanding-the-vaccination-in-the-us
 how-does-vaccination-influence-covid-19-cases
+who-covid-19-dashboard-1
+global-spatial-data-for-cases-deaths

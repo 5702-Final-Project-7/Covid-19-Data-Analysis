@@ -1,2 +1,3 @@
 # Conclusion
 
+We analyze the global distribution of cases, deaths, and vaccination rates. We see the bordering countries show similar patterns. We analyze the higher death rates in the US compared to European countries. We also identify that the incomplete data in Africa and different methods of counting deaths may influence the comparison across regions.,
