@@ -5,9 +5,13 @@
 
 ## Sources
 
+We collect data from WHO Covid-19 Dashboard and CDC Data for Covid-19. We download the csv files from the websites.
+
 
 ### WHO Covid-19 Dashboard
+There is a csv file for the cumulative cases and deaths data of each country. The country names, iso number, date reported are also included in the csv file. There are 239 records of countries and regions, including Global category and others category.
 
+There is a csv file for global vaccination data. We can load the number of persons vaccinated with different numbers of vaccines and vaccination rates of different countries from the file. The country names, WHO region, iso number, date reported are also included in the csv file. There are 229 records of countries and regions.
 
 ### CDC Data for Covid-19
 
@@ -230,6 +234,14 @@ weekly_merge <- merge(weekly_case, weekly_dose, by=c("country_region","date"), a
 
 
 ## Missing value analysis
+
+### WHO Covid-19 dashboard
+
+There are no NAN values in the cumulative cases and deaths data. But there are 4 countries/regions with 0 cases and deaths.They are Democratic People's Republic of Korea,Saint Helena,Tokelau and Turkmenistan. It implies that they didn't report to the WHO and their data are missing. There is a category "other" in the table and it may contain data of countries not included in the 237 countries/ regions.
+
+There are 8 countries/regions which have cumulative cases and deaths data but don't have vaccination data. By comparing the two table we can find the countries are Bonaire, Sint Eustatius and Saba,Democratic Republic of the Congo,Holy See,Mayotte,Réunion,Saint Barthélemy,Saint Martin,and Saint Pierre and Miquelon. They are reltevely small regions which may lack relevant data.
+
+
 
 
 
