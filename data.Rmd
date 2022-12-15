@@ -20,7 +20,22 @@
 
 #### Distribution by Space
 
-Brief explanation and code here
+```{r}
+library("tidyverse")
+library("dplyr")
+casedata <- read.csv("WHO-COVID-19-global-table-data.csv")
+code<-read.csv("WHO-COVID-19-global-data.csv")
+ccode=code%>%select(c("Country_code","Country"))
+countrycode=ccode[!duplicated(ccode$Country),]
+case_code=merge(casedata,countrycode,by.x="Name",by.y="Country")
+df_case = subset(case_code, select = c(Country_code,Cases...cumulative.total,Cases...cumulative.total.per.100000.population,Deaths...cumulative.total,Deaths...cumulative.total.per.100000.population) )
+#df_case:case and death with ISO Alpha-2 country code
+
+save(df_case, file = "df_case.Rdata")
+vaccinedata<- read.csv("vaccination-data.csv")
+df_v=subset(vaccinedata,select=c(ISO3,PERSONS_VACCINATED_1PLUS_DOSE_PER100,PERSONS_FULLY_VACCINATED_PER100))
+save(df_v, file = "df_v.Rdata")
+```
 
 ### Distribution by Time
 
@@ -29,6 +44,9 @@ To analyze the global spread of Covid-19, it's helpful to observe the reported c
 We also extract the US data from the global data set, and compute the reported cases and deaths by day and week. It will provide a deeper insight in our following analysis.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
 who_daily <- read.csv("https://raw.githubusercontent.com/5702-Final-Project-7/Covid-19-Data-Analysis/main/WHO-COVID-19-global-data.csv")
 # summarize the daily reported data of all the countries
 world_daily <- who_daily %>%
