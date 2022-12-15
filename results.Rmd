@@ -18,6 +18,7 @@ library("riskyr")
 library("scales")
 library("htmltools")
 library(grid)
+load(file='~/projectimage.RData')
 ```
 
 

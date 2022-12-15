@@ -243,6 +243,12 @@ There are 8 countries/regions which have cumulative cases and deaths data but do
 
 
 
+```{r}
+save.image(file='~/projectimage.Rdata')
+```
+
+
+
 
 
 
