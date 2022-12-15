@@ -7,3 +7,7 @@ site: bookdown::bookdown_site
 
 # Introduction
 
+
+Coronavirus disease 2019 (COVID-19) is a contagious disease caused by a virus, which has caused global impact since its initial outbreak in December 2019. The COVID-19 pandemic has led to a dramatic loss of human life worldwide and presents an unprecedented challenge to public health, food systems and the world of work.  It's important for data scientists to analyze the patterns of the Covid-19 data to control the spread of the virus. 
+
+In this project,we aim to explore the worldwide spread trend of the disease as well as detailed patterns in the US. The questions we are most curious about include: What is the overall features of the incidence across the world from 2019 to 2022,including spatial distribution and time series characteristics? How much does vaccination prevent the spread? 
