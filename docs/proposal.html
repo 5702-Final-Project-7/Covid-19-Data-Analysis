@@ -23,7 +23,7 @@
 <meta name="author" content="Weipeng Li, Ruochen Zhang, Yujia Chen" />
 
 
-<meta name="date" content="2022-11-22" />
+<meta name="date" content="2022-12-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,6 +52,16 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
 
 
 
@@ -79,17 +89,39 @@
 <li class="chapter" data-level="2.2" data-path="proposal.html"><a href="proposal.html#data-availability"><i class="fa fa-check"></i><b>2.2</b> Data availability</a>
 <ul>
 <li class="chapter" data-level="2.2.1" data-path="proposal.html"><a href="proposal.html#the-who-coronavirus-covid-19-dashboard"><i class="fa fa-check"></i><b>2.2.1</b> The WHO coronavirus (COVID-19) dashboard</a></li>
-<li class="chapter" data-level="2.2.2" data-path="proposal.html"><a href="proposal.html#u.s.-covid-19-data--jhu"><i class="fa fa-check"></i><b>2.2.2</b> U.S. COVID-19 Data- JHU</a></li>
+<li class="chapter" data-level="2.2.2" data-path="proposal.html"><a href="proposal.html#united-states-covid-19-data---cdc-jhu"><i class="fa fa-check"></i><b>2.2.2</b> United States COVID-19 Data - CDC &amp; JHU</a></li>
 <li class="chapter" data-level="2.2.3" data-path="proposal.html"><a href="proposal.html#national-bureau-of-statistics-of-china"><i class="fa fa-check"></i><b>2.2.3</b> National Bureau of Statistics of China</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>3</b> Data</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#sources"><i class="fa fa-check"></i><b>3.1</b> Sources</a></li>
-<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#cleaning-transformation"><i class="fa fa-check"></i><b>3.2</b> Cleaning / transformation</a></li>
-<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#missing-value-analysis"><i class="fa fa-check"></i><b>3.3</b> Missing value analysis</a></li>
+<li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#sources"><i class="fa fa-check"></i><b>3.1</b> Sources</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="data.html"><a href="data.html#who-covid-19-dashboard"><i class="fa fa-check"></i><b>3.1.1</b> WHO COVID-19 Dashboard</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data.html"><a href="data.html#cdc-jhu-data-for-united-states-covid-19-analysis"><i class="fa fa-check"></i><b>3.1.2</b> CDC &amp; JHU Data for United States COVID-19 Analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a></li>
+<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#cleaning-transformation"><i class="fa fa-check"></i><b>3.2</b> Cleaning / transformation</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="data.html"><a href="data.html#covid-19-cases-and-deaths"><i class="fa fa-check"></i><b>3.2.1</b> COVID-19 Cases and Deaths</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data.html"><a href="data.html#distribution-by-time"><i class="fa fa-check"></i><b>3.2.2</b> Distribution by Time</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data.html"><a href="data.html#u.s.-vaccination-data"><i class="fa fa-check"></i><b>3.2.3</b> U.S. Vaccination Data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#missing-value-analysis"><i class="fa fa-check"></i><b>3.3</b> Missing value analysis</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="data.html"><a href="data.html#who-covid-19-dashboard-1"><i class="fa fa-check"></i><b>3.3.1</b> WHO COVID-19 dashboard</a></li>
+<li class="chapter" data-level="3.3.2" data-path="data.html"><a href="data.html#who-vaccination-data"><i class="fa fa-check"></i><b>3.3.2</b> WHO Vaccination Data</a></li>
+<li class="chapter" data-level="3.3.3" data-path="data.html"><a href="data.html#cdc-global-vaccine-data"><i class="fa fa-check"></i><b>3.3.3</b> CDC Global Vaccine Data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="results.html"><a href="results.html#global-spatial-data-for-cases-deaths"><i class="fa fa-check"></i><b>4.1</b> Global spatial data for cases &amp; deaths</a></li>
+<li class="chapter" data-level="4.2" data-path="results.html"><a href="results.html#a-time-series-analysis-for-covid-19-cases-and-deaths"><i class="fa fa-check"></i><b>4.2</b> A Time Series Analysis for Covid-19 Cases and Deaths</a></li>
+<li class="chapter" data-level="4.3" data-path="results.html"><a href="results.html#time-series-analysis-for-covid-19-cases-deaths-in-the-u.s."><i class="fa fa-check"></i><b>4.3</b> Time Series Analysis for COVID-19 Cases &amp; Deaths in the U.S.</a></li>
+<li class="chapter" data-level="4.4" data-path="results.html"><a href="results.html#understanding-the-vaccination-in-the-u.s."><i class="fa fa-check"></i><b>4.4</b> Understanding the Vaccination in the U.S.</a></li>
+<li class="chapter" data-level="4.5" data-path="results.html"><a href="results.html#exploring-vaccination-progress-by-u.s.-state"><i class="fa fa-check"></i><b>4.5</b> Exploring Vaccination Progress by U.S. State</a></li>
+<li class="chapter" data-level="4.6" data-path="results.html"><a href="results.html#how-effective-are-vaccines-at-reducing-the-infection-rate"><i class="fa fa-check"></i><b>4.6</b> How effective are vaccines at reducing the infection rate?</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>5</b> Interactive component</a></li>
 <li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
 <li class="divider"></li>
@@ -120,7 +152,7 @@
 </div>
 <div id="data-availability" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> Data availability<a href="proposal.html#data-availability" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>We will use data from the WHO coronavirus (COVID-19) dashboard, U.S. COVID-19 Data from JHU and data dashboard website of National Bureau of Statistics of China.</p>
+<p>We will use data from the WHO coronavirus (COVID-19) dashboard, U.S. COVID-19 Data from CDC and JHU, and data dashboard website of National Bureau of Statistics of China.</p>
 <div id="the-who-coronavirus-covid-19-dashboard" class="section level3 hasAnchor" number="2.2.1">
 <h3><span class="header-section-number">2.2.1</span> The WHO coronavirus (COVID-19) dashboard<a href="proposal.html#the-who-coronavirus-covid-19-dashboard" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The dashboard data present official daily counts of COVID-19 cases, deaths and vaccine utilisation reported by countries, territories and areas.Links:<a href="https://covid19.who.int/data" class="uri">https://covid19.who.int/data</a></p>
@@ -138,12 +170,12 @@
 <p>Cases and deaths are updated on a daily basis except weekends. Vaccine data are updated on a weekly basis. WHO continues to encourage all users to prioritize weekly counts and long-term trends (over several weeks) as a more reliable measure of COVID-19 epidemiological activity.</p>
 </div>
 </div>
-<div id="u.s.-covid-19-data--jhu" class="section level3 hasAnchor" number="2.2.2">
-<h3><span class="header-section-number">2.2.2</span> U.S. COVID-19 Data- JHU<a href="proposal.html#u.s.-covid-19-data--jhu" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="united-states-covid-19-data---cdc-jhu" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> United States COVID-19 Data - CDC &amp; JHU<a href="proposal.html#united-states-covid-19-data---cdc-jhu" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="description" class="section level4 hasAnchor" number="2.2.2.1">
 <h4><span class="header-section-number">2.2.2.1</span> Description<a href="proposal.html#description" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>The cases and deaths data provides cases and deaths dating back to the beginning of the pandemic in January 2020. Link: <a href="https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_daily_reports_us" class="uri">https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_daily_reports_us</a></p>
-<p>The vaccination data provides the vaccination efforts across the United States. Link: <a href="https://github.com/govex/COVID-19/tree/master/data_tables/vaccine_data/us_data" class="uri">https://github.com/govex/COVID-19/tree/master/data_tables/vaccine_data/us_data</a></p>
+<p>The cases and deaths data provides cases and deaths dating back to the beginning of the pandemic in January 2020. Link: <a href="https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series" class="uri">https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series</a></p>
+<p>The vaccination data provides the vaccination efforts across the United States. Link: <a href="https://covid.cdc.gov/covid-data-tracker/#vaccinations_vacc-people-booster-percent-pop5" class="uri">https://covid.cdc.gov/covid-data-tracker/#vaccinations_vacc-people-booster-percent-pop5</a></p>
 </div>
 <div id="data-source-1" class="section level4 hasAnchor" number="2.2.2.2">
 <h4><span class="header-section-number">2.2.2.2</span> Data source<a href="proposal.html#data-source-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -156,7 +188,7 @@
 </div>
 <div id="frequency-of-updates-1" class="section level4 hasAnchor" number="2.2.2.4">
 <h4><span class="header-section-number">2.2.2.4</span> Frequency of updates<a href="proposal.html#frequency-of-updates-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<p>Covid cases and deaths data are updated once per day between 04:45 and 05:15 GMT, with the most recent official numbers up to the previous day. Vaccination data are updated once a week, with data up to the previous day. Data from previous days will be updated as vaccination records are processed.</p>
+<p>COVID-19 cases and deaths data are updated once per day between 04:45 and 05:15 GMT, with the most recent official numbers up to the previous day. Vaccination data are updated once a week, with data up to the previous day. Data from previous days will be updated as vaccination records are processed.</p>
 </div>
 <div id="delays-in-death-reports" class="section level4 hasAnchor" number="2.2.2.5">
 <h4><span class="header-section-number">2.2.2.5</span> Delays in death reports<a href="proposal.html#delays-in-death-reports" class="anchor-section" aria-label="Anchor link to header"></a></h4>
