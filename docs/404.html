@@ -52,6 +52,16 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
 
 
 
@@ -79,7 +89,7 @@
 <li class="chapter" data-level="2.2" data-path="proposal.html"><a href="proposal.html#data-availability"><i class="fa fa-check"></i><b>2.2</b> Data availability</a>
 <ul>
 <li class="chapter" data-level="2.2.1" data-path="proposal.html"><a href="proposal.html#the-who-coronavirus-covid-19-dashboard"><i class="fa fa-check"></i><b>2.2.1</b> The WHO coronavirus (COVID-19) dashboard</a></li>
-<li class="chapter" data-level="2.2.2" data-path="proposal.html"><a href="proposal.html#u.s.-covid-19-data--jhu"><i class="fa fa-check"></i><b>2.2.2</b> U.S. COVID-19 Data- JHU</a></li>
+<li class="chapter" data-level="2.2.2" data-path="proposal.html"><a href="proposal.html#united-states-covid-19-data---cdc-jhu"><i class="fa fa-check"></i><b>2.2.2</b> United States COVID-19 Data - CDC &amp; JHU</a></li>
 <li class="chapter" data-level="2.2.3" data-path="proposal.html"><a href="proposal.html#national-bureau-of-statistics-of-china"><i class="fa fa-check"></i><b>2.2.3</b> National Bureau of Statistics of China</a></li>
 </ul></li>
 </ul></li>
@@ -87,26 +97,30 @@
 <ul>
 <li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#sources"><i class="fa fa-check"></i><b>3.1</b> Sources</a>
 <ul>
-<li class="chapter" data-level="3.1.1" data-path="data.html"><a href="data.html#who-covid-19-dashboard"><i class="fa fa-check"></i><b>3.1.1</b> WHO Covid-19 Dashboard</a></li>
-<li class="chapter" data-level="3.1.2" data-path="data.html"><a href="data.html#cdc-data-for-covid-19"><i class="fa fa-check"></i><b>3.1.2</b> CDC Data for Covid-19</a></li>
+<li class="chapter" data-level="3.1.1" data-path="data.html"><a href="data.html#who-covid-19-dashboard"><i class="fa fa-check"></i><b>3.1.1</b> WHO COVID-19 Dashboard</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data.html"><a href="data.html#cdc-jhu-data-for-united-states-covid-19-analysis"><i class="fa fa-check"></i><b>3.1.2</b> CDC &amp; JHU Data for United States COVID-19 Analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#cleaning-transformation"><i class="fa fa-check"></i><b>3.2</b> Cleaning / transformation</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="data.html"><a href="data.html#covid-19-cases-and-deaths"><i class="fa fa-check"></i><b>3.2.1</b> Covid-19 Cases and Deaths</a></li>
+<li class="chapter" data-level="3.2.1" data-path="data.html"><a href="data.html#covid-19-cases-and-deaths"><i class="fa fa-check"></i><b>3.2.1</b> COVID-19 Cases and Deaths</a></li>
 <li class="chapter" data-level="3.2.2" data-path="data.html"><a href="data.html#distribution-by-time"><i class="fa fa-check"></i><b>3.2.2</b> Distribution by Time</a></li>
-<li class="chapter" data-level="3.2.3" data-path="data.html"><a href="data.html#us-vaccination-data"><i class="fa fa-check"></i><b>3.2.3</b> US Vaccination Data</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data.html"><a href="data.html#u.s.-vaccination-data"><i class="fa fa-check"></i><b>3.2.3</b> U.S. Vaccination Data</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#missing-value-analysis"><i class="fa fa-check"></i><b>3.3</b> Missing value analysis</a>
 <ul>
-<li class="chapter" data-level="3.3.1" data-path="data.html"><a href="data.html#who-covid-19-dashboard-1"><i class="fa fa-check"></i><b>3.3.1</b> WHO Covid-19 dashboard</a></li>
+<li class="chapter" data-level="3.3.1" data-path="data.html"><a href="data.html#who-covid-19-dashboard-1"><i class="fa fa-check"></i><b>3.3.1</b> WHO COVID-19 dashboard</a></li>
+<li class="chapter" data-level="3.3.2" data-path="data.html"><a href="data.html#who-vaccination-data"><i class="fa fa-check"></i><b>3.3.2</b> WHO Vaccination Data</a></li>
+<li class="chapter" data-level="3.3.3" data-path="data.html"><a href="data.html#cdc-global-vaccine-data"><i class="fa fa-check"></i><b>3.3.3</b> CDC Global Vaccine Data</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="results.html"><a href="results.html#global-spatial-data-for-cases-deaths"><i class="fa fa-check"></i><b>4.1</b> Global spatial data for cases &amp; deaths</a></li>
 <li class="chapter" data-level="4.2" data-path="results.html"><a href="results.html#a-time-series-analysis-for-covid-19-cases-and-deaths"><i class="fa fa-check"></i><b>4.2</b> A Time Series Analysis for Covid-19 Cases and Deaths</a></li>
-<li class="chapter" data-level="4.3" data-path="results.html"><a href="results.html#understanding-the-vaccination-in-the-us"><i class="fa fa-check"></i><b>4.3</b> Understanding the Vaccination in the US</a></li>
-<li class="chapter" data-level="4.4" data-path="results.html"><a href="results.html#how-does-vaccination-influence-covid-19-cases"><i class="fa fa-check"></i><b>4.4</b> How Does Vaccination Influence Covid-19 Cases?</a></li>
+<li class="chapter" data-level="4.3" data-path="results.html"><a href="results.html#time-series-analysis-for-covid-19-cases-deaths-in-the-u.s."><i class="fa fa-check"></i><b>4.3</b> Time Series Analysis for COVID-19 Cases &amp; Deaths in the U.S.</a></li>
+<li class="chapter" data-level="4.4" data-path="results.html"><a href="results.html#understanding-the-vaccination-in-the-u.s."><i class="fa fa-check"></i><b>4.4</b> Understanding the Vaccination in the U.S.</a></li>
+<li class="chapter" data-level="4.5" data-path="results.html"><a href="results.html#exploring-vaccination-progress-by-u.s.-state"><i class="fa fa-check"></i><b>4.5</b> Exploring Vaccination Progress by U.S. State</a></li>
+<li class="chapter" data-level="4.6" data-path="results.html"><a href="results.html#how-effective-are-vaccines-at-reducing-the-infection-rate"><i class="fa fa-check"></i><b>4.6</b> How effective are vaccines at reducing the infection rate?</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>5</b> Interactive component</a></li>
 <li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
