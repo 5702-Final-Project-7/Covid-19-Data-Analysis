@@ -1,5 +1,5 @@
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r}
+#knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 library(tidyverse)
 library(ggplot2)
@@ -39,7 +39,7 @@ load(file = "df_v.Rdata")
 
 
 world <- ne_countries(scale = "medium", returnclass = "sf")
-class(world)
+#class(world)
 
 worldmm<-merge(world,df_case,by.x="iso_a2",by.y="Country_code")
 worldm<-merge(worldmm,df_v,by.x="iso_a3",by.y="ISO3")
@@ -231,7 +231,7 @@ As we can see from the chart, we observed the following patterns:
 * During January 2022, new cases sharply rose again amidst the spread of the Omicron variant, resulting in the highest case rates recorded since the start of the pandemic. By February 2022, new cases had fallen sharply, and disparities once again narrowed.
 
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
+```{r}
 p1 <- ggplot(us_daily, aes(x = Date_reported, y = New_cases)) +
   geom_line(color = "darkred") +
   scale_x_date(breaks = function(x) seq.Date(from = min(x), to = max(x), by = "4 months"),
@@ -332,10 +332,11 @@ ggplot(vac_age_long, aes(fct_relevel(age,'5 - 11 Years'),value,fill=name)) +
   theme_light()
 ```
 
+## Exploring Vaccination Progress by U.S. State
 
 To explore U.S. vaccination efforts, we draw the boxplot of the fully vaccinated rate by state. The median of U.S. fully vaccinated rate is 66.3%, while the U.S. average fully vaccinated rate is 68.9%. 
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
+```{r}
 ggplot(vaccinated_us, aes(x = fully_vaccinated_rate)) +
   geom_boxplot()+
   geom_segment(x=68.9,xend=68.9,y=-0.37,yend=0.37,color='red',linetype='dotted')+
@@ -352,7 +353,8 @@ ggplot(vaccinated_us, aes(x = fully_vaccinated_rate)) +
 
 To compare states' vaccination progress, we produced the Cleveland dot plot below. We can see that these are the states, territories with the highest fully vaccination rates: Rhode Island, Puerto Rico, Vermont, D.C., and Massachusetts. Over half of the states' fully vaccination rates are below U.S. average rate.
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
+
+```{r}
 theme_dotplot <- 
   theme_bw(16) +
   theme(axis.text.y = element_text(size = rel(.8)), axis.ticks.y = element_blank(),
@@ -387,7 +389,7 @@ We can see that the new infections slow down after the vaccine rollout in Decemb
 
 A limitation of our study is that we modeled only viral dynamics within the U.S. However, vaccines developed by the U.S. were also deployed around the world, changing the trajectory of the pandemic on a global scale. Without them, more variants could have emerged or there could have been greater importation of COVID-19 cases. 
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
+```{r}
 weekly_merge %>% filter(country_region == "US") %>%
   ggplot(aes(x = date)) +
   geom_line(aes(y = doses_n), color = "darkred") +
