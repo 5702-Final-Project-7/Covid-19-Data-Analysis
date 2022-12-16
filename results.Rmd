@@ -157,7 +157,7 @@ v_map<-leaflet(worldm) %>%
 setView(v_map,lng=-30, lat=-20, 1)
 ```
 
-## A Time Series Analysis for Covid-19 Cases and Deaths
+## Time series analysis for Covid-19 cases and deaths worldwide
 
 Covid-19 started at the beginning of 2020, and spread quickly accross the world. To analyze the overall spread pattern of the pademic, we analyze the global cases and deaths data as a time series. By plotting the time series by day, we observed a strong cyclic pattern, making the data very noisy. This is because of the delay of data update during weekends of the original dataset. To remove the cyclic pattern, it's better to use the weekly time series.
 
@@ -217,7 +217,7 @@ p
 ```
 
 
-## Time Series Analysis for COVID-19 Cases & Deaths in the U.S.
+## Time series analysis for Covid-19 cases & deaths in the U.S.
 
 The United States is the country with the highest number of confirmed cases and deaths. The count of known new cases is the closest thing we have to a real-time gauge of the coronavirus's reach. The introduction and widespread availability of COVID-19 vaccines has led to changing patterns of COVID-19 morbidity and mortality over the course of the pandemic. 
 
@@ -281,7 +281,7 @@ p
 
 ```
 
-## Understanding the Vaccination in the U.S.
+## Understanding overall vaccination data in the U.S.
 
 In this section, we focus on the U.S. COVID-19 vaccination data. By analyzing and visualizing the data, we try to answer the following questions - what is the overall level of US vaccination comparing to global data? How many Americans have been fully vaccinated while how many of them haven't taken any vaccination? Which state has the highest vaccination rate?
 
@@ -333,7 +333,7 @@ ggplot(vac_age_long, aes(fct_relevel(age,'5 - 11 Years'),value,fill=name)) +
   theme_light()
 ```
 
-## Exploring Vaccination Progress by U.S. State
+## Exploring vaccination progress by U.S. state
 
 To explore U.S. vaccination efforts, we draw the boxplot of the fully vaccinated rate by state. The median of U.S. fully vaccinated rate is 66.3%, while the U.S. average fully vaccinated rate is 68.9%. 
 
