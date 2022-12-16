@@ -36,9 +36,9 @@ who-vaccination-data
 cdc-global-vaccine-data
 results
 global-spatial-data-for-cases-deaths
-a-time-series-analysis-for-covid-19-cases-and-deaths
+time-series-analysis-for-covid-19-cases-and-deaths-worldwide
 time-series-analysis-for-covid-19-cases-deaths-in-the-u.s.
-understanding-the-vaccination-in-the-u.s.
+understanding-overall-vaccination-data-in-the-u.s.
 exploring-vaccination-progress-by-u.s.-state
 how-effective-are-vaccines-at-reducing-the-infection-rate
 interactive-component
