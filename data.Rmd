@@ -1,4 +1,15 @@
-
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(scales)
+library(lubridate)
+library(glue)
+library(ggridges)
+library(colorspace)
+library(redav)
+```
 # Data 
 
 
@@ -105,8 +116,15 @@ To analyze the US vaccination rate, we tried to compare it to those of other cou
 
 ```{r}
 world_vac_df <- read.csv('https://raw.githubusercontent.com/5702-Final-Project-7/Covid-19-Data-Analysis/main/vaccination-data.csv')
+world_vac_df1 <- world_vac_df %>% 
+  rename(ct=COUNTRY, rg = WHO_REGION, sce=DATA_SOURCE,
+         date=DATE_UPDATED, vs=TOTAL_VACCINATIONS, v1p=PERSONS_VACCINATED_1PLUS_DOSE,
+         vrat=TOTAL_VACCINATIONS_PER100, v1rat=PERSONS_VACCINATED_1PLUS_DOSE_PER100,
+         fvp=PERSONS_FULLY_VACCINATED, fvrat=PERSONS_FULLY_VACCINATED_PER100,
+         type=VACCINES_USED,vd1=FIRST_VACCINE_DATE,ntype=NUMBER_VACCINES_TYPES_USED,
+         bp=PERSONS_BOOSTER_ADD_DOSE,brat=PERSONS_BOOSTER_ADD_DOSE_PER100)
 world_vac <- world_vac_df %>%
-  select(COUNTRY,PERSONS_FULLY_VACCINATED_PER100) %>%
+  select(COUNTRY, PERSONS_FULLY_VACCINATED_PER100) %>%
   rename(country=COUNTRY, fully_vaccinated_rate = PERSONS_FULLY_VACCINATED_PER100)
 
 # check and remove missing values and outliers
@@ -138,6 +156,28 @@ us_vac <- world_vac_df %>%
   pivot_longer(!country)
 ```
 
+#### US Vaccination by Age
+
+For the vaccination rate of different age groups, we use the data from CDC (Centers of Disease Control and Prevention). It provides vaccinated and fully vaccinated rate by age. As each age group yields several observations from different date, we use the data from the latest update as the vaccinated rate is a cumulative variable. Besides, there are no reported data from children less than 5 years old, as they are too young to get vaccinated, so we only focus on 6 age groups: '5 - 1','12 - 17','18 - 24','25 - 49', '50 - 64', and '65+'.
+
+```{r}
+vac_age_df <- read.csv('COVID-19_Vaccination_and_Case_Trends_by_Age_Group__United_States.csv')
+vac_age <- vac_age_df %>%
+  select(Date.Administered,AgeGroupVacc,Series_Complete_Pop_pct_agegroup,
+         X7.day_avg_group_cases_per_100k,Administered_Dose1_pct_agegroup) %>%
+  rename(date=Date.Administered,age=AgeGroupVacc,
+         fully_vaccinated_rate=Series_Complete_Pop_pct_agegroup,
+         vaccinated_rate=Administered_Dose1_pct_agegroup,
+         case_rate=X7.day_avg_group_cases_per_100k)%>%
+  filter(date==max(date)) %>%
+  mutate(vaccinated_rate=percent(vaccinated_rate)) %>%
+  mutate(fully_vaccinated_rate=percent(fully_vaccinated_rate)) %>%
+  mutate(case_rate=percent(case_rate/100000)) %>%
+  filter(age %in% c('5 - 11 Years','12 - 17 Years','18 - 24 Years','25 - 49 Years',
+                    '50 - 64 Years', '65+ Years'))
+vac_age_long <- pivot_longer(vac_age[,c(2,3,5)],cols=!age)
+vac_age_long
+```
 
 #### US Vaccination by State
 
@@ -235,15 +275,24 @@ weekly_merge <- merge(weekly_case, weekly_dose, by=c("country_region","date"), a
 
 ## Missing value analysis
 
+
 ### WHO Covid-19 dashboard
 
 There are no NAN values in the cumulative cases and deaths data. But there are 4 countries/regions with 0 cases and deaths.They are Democratic People's Republic of Korea,Saint Helena,Tokelau and Turkmenistan. It implies that they didn't report to the WHO and their data are missing. There is a category "other" in the table and it may contain data of countries not included in the 237 countries/ regions.
 
-There are 8 countries/regions which have cumulative cases and deaths data but don't have vaccination data. By comparing the two table we can find the countries are Bonaire, Sint Eustatius and Saba,Democratic Republic of the Congo,Holy See,Mayotte,Réunion,Saint Barthélemy,Saint Martin,and Saint Pierre and Miquelon. They are reltevely small regions which may lack relevant data.
+There are 8 countries/regions which have cumulative cases and deaths data but don't have vaccination data. By comparing the two table we can find the countries are Bonaire, Sint Eustatius and Saba,Democratic Republic of the Congo,Holy See,Mayotte,Réunion,Saint Barthélemy,Saint Martin,and Saint Pierre and Miquelon. They are relatively small regions which may lack relevant data.
 
+### WHO Vaccination Data
 
+There are some missing values in the WHO global vaccination data set. More than 87% of the observations are complete cases, while about 10% of the observations have missing values on PERSONS_BOOSTER_ADD_DOSE (bp) and PERSONS_BOOSTER_ADD_DOSE_PER100 (brat), probably because some countries have not promoted boosters. Very few rows have missing values on other variables such as VACCINES_USED (type). But fortunately, as we mainly focus on fully vaccinated rate in the global data, we have almost complete data in all the countries. We also notice that the US data is complete in this data set, which can be used for further analysis.
 
 ```{r}
+plot_missing(world_vac_df1, percent=TRUE)
+```
+
+
+
+```{r,include=False}
 save.image(file='~/projectimage.Rdata')
 ```
 
