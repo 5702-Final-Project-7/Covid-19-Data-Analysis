@@ -1,5 +1,5 @@
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r}
+#knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 library(tidyverse)
 library(ggplot2)
@@ -67,7 +67,7 @@ To analyze the global spread of COVID-19, it's helpful to observe the reported c
 
 We also extract the U.S. data from the global data set, and compute the reported cases and deaths by day and week. It will provide a deeper insight in our following analysis.
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
+```{r}
 library(dplyr)
 library(tidyverse)
 library(ggplot2)
@@ -189,7 +189,7 @@ vac_age_long <- pivot_longer(vac_age[,c(2,3,5)],cols=!age)
 To analyze the vaccination progress across the United States, we used CDC united states vaccination data. It provides the detailed vaccination rate by each jurisdiction. For each jurisdiction, it specifies the percent of residents vaccinated, doses administered, doses distributed, and fully vaccination rate. We compared the percent of people fully vaccinated and US average fully vaccination rate in the next chapter.
 
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
+```{r}
 vacraw <- read_csv("https://raw.githubusercontent.com/5702-Final-Project-7/Covid-19-Data-Analysis/main/covid19_vaccinations_us.csv")
 vac_us <- vacraw %>%
   select(`Jurisdiction (State/Territory) or Federal Entity`, 
@@ -206,7 +206,7 @@ vaccinated_us[, c(2)] <- sapply(vaccinated_us[, c(2)], as.numeric)
 
 To analyze the vaccination effort in the United States, we used JHU COVID-19 cases and CDC vaccination data. The COVID-19 cases data provides the reported cases from Jan 2020 to now. The data is collected from the report of different countries separately. We calculated the daily new cases and weekly new cases to gain insights from it. The global vaccination data provides the reported doses from Dec 2020 to now for each country. We also calculated the daily new doses and weekly new doses for the vaccination effort in United States.
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
+```{r}
 dosesraw <- read_csv("https://raw.githubusercontent.com/govex/COVID-19/master/data_tables/vaccine_data/global_data/time_series_covid19_vaccine_doses_admin_global.csv")
 
 doses_1 <- dosesraw %>%
@@ -310,7 +310,7 @@ gg_miss_fct(doses, date)
 
 
 
-```{r,include=FALSE}
+```{r}
 save.image(file='~/projectimage.Rdata')
 ```
 
