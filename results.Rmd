@@ -162,13 +162,13 @@ Covid-19 started at the beginning of 2020, and spread quickly accross the world.
 
 From the two weekly time series, we observed the following patterns.
 
-* The first peak of reported deaths appeared in April 2020, with no peak in reported cases at the same time. This refer to the early spread in China. The low cases and high deaths also indicate the high fatality rate of the virus at the beginning.
+* The first spike of reported deaths appeared in April 2020, with no spike in reported cases at the same time. This refer to the early spread in China. The low cases and high deaths also indicate the high fatality rate of the virus at the beginning.
 
-* In January 2021, both the reported cases and reported deaths experience a relatively strong peak. During this time, the has pandemic spreader worldwide, and countries in Europe and America are experiencing a high infection rate of Covid-19.
+* In January 2021, both the reported cases and reported deaths experience a relatively strong spike. During this time, the has pandemic spreaded worldwide, and contries in Europe and America are experiencing a high infection rate of Covid-19.
 
 * The reported cases and deaths began decreasing slowly with vaccination being available since December 2020.
 
-* The most outstanding peak of reported cases appeared in January 2022, with over 20 million weekly new cases around the world. This was over four times of that in January 2021. This was exactly the time when Omicron variant spread drastically across the world. However, the report deaths did not increase that much at the mean time, from which we could conclude that Omicron spreads more easily than earlier variants, but causes less severe illness and death in general.
+* The most outstanding spike of reported cases appeared in January 2022, with over 20 million weekly new cases around the world. This was over four times of that in January 2021. This was exactly the time when Omicron variant spread drastically accross the world. However, the report deaths did not increase that much at the mean time, from which we could conclude that Omicron spreads more easily than earlier variants, but causes less severe illness and death in general.
 
 ```{r}
 # global new cases by day
@@ -216,13 +216,19 @@ p
 ```
 
 
-<font color='red'>  
+## Time Series Analysis for COVID-19 Cases & Deaths in the U.S.
 
-Time series for US Cases & Deaths
+The United States is the country with the highest number of confirmed cases and deaths. The count of known new cases is the closest thing we have to a real-time gauge of the coronavirus's reach. The introduction and widespread availability of COVID-19 vaccines has led to changing patterns of COVID-19 morbidity and mortality over the course of the pandemic. 
 
-Explanations here.
+The weekly time series is a better way to view trends in new cases and deaths. It also can serve as a warning: if cases suddenly rise, hospitalizations and deaths almost certainly will follow.
 
-</font>
+As we can see from the chart, we observed the following patterns:
+
+* A rise in deaths usually follows a rise in new cases by about a month. For example, after the delta variant caused a surge of new cases beginning in July 2021, the death toll began to climb in August.
+
+* COVID-19–related deaths substantially decreased in the United States in March 2022. During April - early November 2022, this initial decline was largely sustained and the overall number of COVID-19 related deaths remained relatively stable.
+
+* During January 2022, new cases sharply rose again amidst the spread of the Omicron variant, resulting in the highest case rates recorded since the start of the pandemic. By February 2022, new cases had fallen sharply, and disparities once again narrowed.
 
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
@@ -274,9 +280,9 @@ p
 
 ```
 
-## Understanding the Vaccination in the US
+## Understanding the Vaccination in the U.S.
 
-In this section, we focus on the US Covid-19 vaccination data. By analyzing and visualizing the data, we try to answer the following questions - what is the overall level of US vaccination comparing to global data? How many Americans have been fully vaccinated while how many of them haven't taken any vaccination? Which state has the highest vaccination rate?
+In this section, we focus on the U.S. COVID-19 vaccination data. By analyzing and visualizing the data, we try to answer the following questions - what is the overall level of US vaccination comparing to global data? How many Americans have been fully vaccinated while how many of them haven't taken any vaccination? Which state has the highest vaccination rate?
 
 We first draw a boxplot of the fully vaccinated rate of different countries across the world. The median of global fully vaccinated rate is 61.165, while the US fully vaccinated rate is 67.989, which is between the median and third quantile of the global data.
 
@@ -293,7 +299,7 @@ ggplot(world_vac, aes(x=fully_vaccinated_rate)) +
   theme_light()
 ```
 
-To understand the different vaccination state of the US population, we produced a stacked bar chart. we observed that 68% of the US population has been fully vaccinated, among which 33.7% of the population has taken the booster. However, there are still 20.3% of the population who have not taken any vaccine.
+To understand the different vaccination state of the US population, we produced a stacked bar chart. We observed that 68% of the US population has been fully vaccinated, among which 33.7% of the population has taken the booster. However, there are still 20.3% of the population who have not taken any vaccine.
 
 ```{r}
 us_vac$country <- rep('',4)
@@ -326,24 +332,8 @@ ggplot(vac_age_long, aes(fct_relevel(age,'5 - 11 Years'),value,fill=name)) +
   theme_light()
 ```
 
-<font color='red'>
-Brief explanation here
-</font>
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
-us_vac_density <- vaccinated_us %>%
-  filter(state == 'United States') %>%
-  mutate(color = 'red')
-
-ggplot(vaccinated_us, aes(fully_vaccinated_rate)) +
-  geom_density(fill = "pink",alpha = .3) +
-  geom_vline(aes(xintercept = fully_vaccinated_rate),
-             data = us_vac_density, color = 'red',linetype = 'dotted')+
-  geom_text(aes(x = 75, label="\nUS Average: 68.9%", y=0.012), color="red")+
-  ggtitle("US States Fully Vaccinated Rate") +
-  theme(plot.title = element_text(hjust = .5))+
-  xlab('Fully Vaccinated Rate')
-```
+To explore U.S. vaccination efforts, we draw the boxplot of the fully vaccinated rate by state. The median of U.S. fully vaccinated rate is 66.3%, while the U.S. average fully vaccinated rate is 68.9%. 
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 ggplot(vaccinated_us, aes(x = fully_vaccinated_rate)) +
@@ -358,6 +348,9 @@ ggplot(vaccinated_us, aes(x = fully_vaccinated_rate)) +
   coord_flip()+
   theme_light()
 ```
+
+
+To compare states' vaccination progress, we produced the Cleveland dot plot below. We can see that these are the states, territories with the highest fully vaccination rates: Rhode Island, Puerto Rico, Vermont, D.C., and Massachusetts. Over half of the states' fully vaccination rates are below U.S. average rate.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 theme_dotplot <- 
@@ -386,13 +379,13 @@ ggplot(vaccinated_us, aes(x = fully_vaccinated_rate, y = reorder(state, fully_va
 theme_dotplot
 ```
 
-## How Does Vaccination Influence Covid-19 Cases?
+## How effective are vaccines at reducing the infection rate?
 
-<font color='red'>
-Explanation here.
+The blue dash-dotted line is the cumulative daily cases over time (right y-axis). The red dash-dotted line is the cumulative vaccination coverage of fully vaccinated individuals in the population (right y-axis). The chart shows a timeline of COVID-19 developments during the pandemic, including important events and vaccination timeline. 
 
-Feel free to change this section :)
-</font>
+We can see that the new infections slow down after the vaccine rollout in December 2020. During January 2022, the Omicron variants have been particularly immune-evasive and drove the largest surge in COVID-19 cases to date. COVID-19 monovalent vaccines available at the time were not as efficacious against the variant as bivalent boosters introduced later, but the wave would have been more devastating in the absence of vaccination.
+
+A limitation of our study is that we modeled only viral dynamics within the U.S. However, vaccines developed by the U.S. were also deployed around the world, changing the trajectory of the pandemic on a global scale. Without them, more variants could have emerged or there could have been greater importation of COVID-19 cases. 
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 weekly_merge %>% filter(country_region == "US") %>%
@@ -406,6 +399,6 @@ weekly_merge %>% filter(country_region == "US") %>%
   theme(legend.position="bottom",plot.title = element_text(hjust = 0.5)) +
   scale_color_manual(name="Doses",
   values =  c("steelblue","darkred"),breaks = c("Doses", "Cases")) +
-  ggtitle("Covid-19 Cases vs Doses in United States")
+  ggtitle("COVID-19 Cases vs Doses in United States")
 ```
 
