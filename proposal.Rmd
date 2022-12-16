@@ -7,7 +7,7 @@ The context of the research is organised as the following. In the first part of 
 
 ## Data availability
 
-We will use data from the WHO coronavirus (COVID-19) dashboard, U.S. COVID-19 Data from JHU and data dashboard website of National Bureau of Statistics of China.
+We will use data from the WHO coronavirus (COVID-19) dashboard, U.S. COVID-19 Data from CDC and JHU, and data dashboard website of National Bureau of Statistics of China.
 
 ### The WHO coronavirus (COVID-19) dashboard 
 
@@ -28,13 +28,13 @@ Data can be downloaded in comma-separated values (CSV) files. They can be import
 Cases and deaths are updated on a daily basis except weekends. Vaccine data are updated on a weekly basis. WHO continues to encourage all users to prioritize weekly counts and long-term trends (over several weeks) as a more reliable measure of COVID-19 epidemiological activity.
 
 
-### U.S. COVID-19 Data - JHU
+### United States COVID-19 Data - CDC & JHU
 
 #### Description
 
-The cases and deaths data provides cases and deaths dating back to the beginning of the pandemic in January 2020. Link: <https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_daily_reports_us>
+The cases and deaths data provides cases and deaths dating back to the beginning of the pandemic in January 2020. Link: <https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series>
 
-The vaccination data provides the vaccination efforts across the United States. Link: <https://github.com/govex/COVID-19/tree/master/data_tables/vaccine_data/us_data>
+The vaccination data provides the vaccination efforts across the United States. Link: <https://covid.cdc.gov/covid-data-tracker/#vaccinations_vacc-people-booster-percent-pop5>
 
 #### Data source
 
@@ -48,7 +48,7 @@ The data can be downloaded as csv file. We will combine the data files in R for 
 
 #### Frequency of updates
 
-Covid cases and deaths data are updated once per day between 04:45 and 05:15 GMT, with the most recent official numbers up to the previous day. Vaccination data are updated once a week, with data up to the previous day. Data from previous days will be updated as vaccination records are processed.
+COVID-19 cases and deaths data are updated once per day between 04:45 and 05:15 GMT, with the most recent official numbers up to the previous day. Vaccination data are updated once a week, with data up to the previous day. Data from previous days will be updated as vaccination records are processed.
 
 #### Delays in death reports
 
