@@ -1,5 +1,5 @@
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r}
+#knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 library(tidyverse)
 library(ggplot2)
@@ -39,7 +39,7 @@ load(file = "df_v.Rdata")
 
 
 world <- ne_countries(scale = "medium", returnclass = "sf")
-class(world)
+#class(world)
 
 worldmm<-merge(world,df_case,by.x="iso_a2",by.y="Country_code")
 worldm<-merge(worldmm,df_v,by.x="iso_a3",by.y="ISO3")
@@ -225,7 +225,7 @@ Explanations here.
 </font>
 
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
+```{r}
 p1 <- ggplot(us_daily, aes(x = Date_reported, y = New_cases)) +
   geom_line(color = "darkred") +
   scale_x_date(breaks = function(x) seq.Date(from = min(x), to = max(x), by = "4 months"),
@@ -330,7 +330,7 @@ ggplot(vac_age_long, aes(fct_relevel(age,'5 - 11 Years'),value,fill=name)) +
 Brief explanation here
 </font>
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
+```{r}
 us_vac_density <- vaccinated_us %>%
   filter(state == 'United States') %>%
   mutate(color = 'red')
@@ -345,7 +345,7 @@ ggplot(vaccinated_us, aes(fully_vaccinated_rate)) +
   xlab('Fully Vaccinated Rate')
 ```
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
+```{r}
 ggplot(vaccinated_us, aes(x = fully_vaccinated_rate)) +
   geom_boxplot()+
   geom_segment(x=68.9,xend=68.9,y=-0.37,yend=0.37,color='red',linetype='dotted')+
@@ -359,7 +359,7 @@ ggplot(vaccinated_us, aes(x = fully_vaccinated_rate)) +
   theme_light()
 ```
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
+```{r}
 theme_dotplot <- 
   theme_bw(16) +
   theme(axis.text.y = element_text(size = rel(.8)), axis.ticks.y = element_blank(),
@@ -394,7 +394,7 @@ Explanation here.
 Feel free to change this section :)
 </font>
 
-```{r echo=TRUE, message=FALSE, warning=FALSE}
+```{r}
 weekly_merge %>% filter(country_region == "US") %>%
   ggplot(aes(x = date)) +
   geom_line(aes(y = doses_n), color = "darkred") +
