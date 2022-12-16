@@ -28,7 +28,7 @@ Data can be downloaded in comma-separated values (CSV) files. They can be import
 Cases and deaths are updated on a daily basis except weekends. Vaccine data are updated on a weekly basis. WHO continues to encourage all users to prioritize weekly counts and long-term trends (over several weeks) as a more reliable measure of COVID-19 epidemiological activity.
 
 
-### U.S. COVID-19 Data- JHU
+### U.S. COVID-19 Data - JHU
 
 #### Description
 
