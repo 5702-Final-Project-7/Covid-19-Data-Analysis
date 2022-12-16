@@ -16,16 +16,17 @@ library(redav)
 
 ## Sources
 
-We collect data from WHO Covid-19 Dashboard and CDC Data for Covid-19. We download the csv files from the websites.
+We collect data from WHO for COVID-19 Dashboard and CDC & JHU data for United States COVID-19 analysis. We download the csv files from the websites.
 
 
-### WHO Covid-19 Dashboard
+### WHO COVID-19 Dashboard
+
 There is a csv file for the cumulative cases and deaths data of each country. The country names, iso number, date reported are also included in the csv file. There are 239 records of countries and regions, including Global category and others category.
 
 There is a csv file for global vaccination data. We can load the number of persons vaccinated with different numbers of vaccines and vaccination rates of different countries from the file. The country names, WHO region, iso number, date reported are also included in the csv file. There are 229 records of countries and regions.
 
 
-### CDC Data for COVID-19 Vaccination
+### CDC & JHU Data for United States COVID-19 Analysis
 
 The vaccination data provides the vaccination efforts across the United States and is downloaded as csv file. It provides the doses attributed, doses administered and vaccination rate with different age groups by state. There are 54 records of jurisdiction (State/Territory).
 
@@ -33,10 +34,11 @@ The global confirmed cases data provides the daily confirmed cases, reported at 
 
 
 
+
 ## Cleaning / transformation
 
 
-### Covid-19 Cases and Deaths
+### COVID-19 Cases and Deaths
 
 #### Distribution by Space
 The cumulative cases and deaths data from WHO can be loaded from the csv files directly. Then we select infection rates, fatality rates, country names and country iso numbers from the data frame. For the vaccine data, we load the csv file and select country names, country numbers and persons with 1+ doses of 100 population from the data frame. Then we store the data frames in Rdata files for future use. 
@@ -61,9 +63,9 @@ save(df_v, file = "df_v.Rdata")
 
 ### Distribution by Time
 
-To analyze the global spread of Covid-19, it's helpful to observe the reported cases and deaths as a three-year time series from early 2020 to late 2020. The data is collected from the report of different countries separately, so we first sum them up to obtain the global reported data by day. We notice that there is a delay in data collection on weekends in the data set, which may lead to an undesired cyclic pattern. To deal with that, we also build another data frame by grouping the reported date by week. We believe this weekly reported data frame may bring clearer insights of the data.
+To analyze the global spread of COVID-19, it's helpful to observe the reported cases and deaths as a three-year time series from early 2020 to late 2020. The data is collected from the report of different countries separately, so we first sum them up to obtain the global reported data by day. We notice that there is a delay in data collection on weekends in the data set, which may lead to an undesired cyclic pattern. To deal with that, we also build another data frame by grouping the reported date by week. We believe this weekly reported data frame may bring clearer insights of the data.
 
-We also extract the US data from the global data set, and compute the reported cases and deaths by day and week. It will provide a deeper insight in our following analysis.
+We also extract the U.S. data from the global data set, and compute the reported cases and deaths by day and week. It will provide a deeper insight in our following analysis.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 library(dplyr)
@@ -112,11 +114,11 @@ us_weekly <- us_daily %>%
 ```
 
 
-### US Vaccination Data
+### U.S. Vaccination Data
 
-#### US Vaccination Compared to the Global Data
+#### U.S. Vaccination Compared to the Global Data
 
-To analyze the US vaccination rate, we tried to compare it to those of other countries in the world. We used the WHO global vaccination data, which provides detailed vaccination data divided by countries. For each country, it gives the total vaccinations, the vaccinated rate, fully vaccinated rate as well as the main type of vaccines the country uses. In our analysis, we only care about the vaccinated rate and fully vaccinated rate of different countries. Another issue of the data is missing values and outliers. There's no fully vaccinated rate for Guernsey, and the fully vaccinated rate of Eritrea, Brunei Darussalam, Gibraltar, Palau and Tokelau are more than 100%. So we drop these six rows. 
+To analyze the U.S. vaccination rate, we tried to compare it to those of other countries in the world. We used the WHO global vaccination data, which provides detailed vaccination data divided by countries. For each country, it gives the total vaccinations, the vaccinated rate, fully vaccinated rate as well as the main type of vaccines the country uses. In our analysis, we only care about the vaccinated rate and fully vaccinated rate of different countries. Another issue of the data is missing values and outliers. There's no fully vaccinated rate for Guernsey, and the fully vaccinated rate of Eritrea, Brunei Darussalam, Gibraltar, Palau and Tokelau are more than 100%. So we drop these six rows. 
 
 
 ```{r}
@@ -139,9 +141,9 @@ world_vac <- world_vac[-c(na_index,outlier_index),]
 
 ```
 
-#### Vaccination State in US Populations
+#### Vaccination State in U.S. Populations
 
-We further made use of the global vaccination data set by extracting the US data, and calculating the proportion of vaccination, full vaccination, boosting in the US population. The data frame consists of 5 columns: 'country', 'not_vaccinated', 'vaccinated', 'fully_vaccinated', and 'boosted'. We transformed it to tidy form which only contains 3 columns for further graphing.
+We further made use of the global vaccination data set by extracting the U.S. data, and calculating the proportion of vaccination, full vaccination, boosting in the U.S. population. The data frame consists of 5 columns: 'country', 'not_vaccinated', 'vaccinated', 'fully_vaccinated', and 'boosted'. We transformed it to tidy form which only contains 3 columns for further graphing.
 
 
 ```{r}
@@ -160,7 +162,7 @@ us_vac <- world_vac_df %>%
   pivot_longer(!country)
 ```
 
-#### US Vaccination by Age
+#### U.S. Vaccination by Age
 
 For the vaccination rate of different age groups, we use the data from CDC (Centers of Disease Control and Prevention). It provides vaccinated and fully vaccinated rate by age. As each age group yields several observations from different date, we use the data from the latest update as the vaccinated rate is a cumulative variable. Besides, there are no reported data from children less than 5 years old, as they are too young to get vaccinated, so we only focus on 6 age groups: '5 - 1','12 - 17','18 - 24','25 - 49', '50 - 64', and '65+'.
 
@@ -182,7 +184,7 @@ vac_age <- vac_age_df %>%
 vac_age_long <- pivot_longer(vac_age[,c(2,3,5)],cols=!age)
 ```
 
-#### US Vaccination by State
+#### U.S. Vaccination by State
 
 To analyze the vaccination progress across the United States, we used CDC united states vaccination data. It provides the detailed vaccination rate by each jurisdiction. For each jurisdiction, it specifies the percent of residents vaccinated, doses administered, doses distributed, and fully vaccination rate. We compared the percent of people fully vaccinated and US average fully vaccination rate in the next chapter.
 
@@ -202,7 +204,7 @@ vaccinated_us[, c(2)] <- sapply(vaccinated_us[, c(2)], as.numeric)
 
 #### Vaccination and Reported Cases
 
-To analyze the vaccination effort in the United States, we used CDC COVID-19 cases and vaccination data. The COVID-19 cases data provides the reported cases from Jan 2020 to now. The data is collected from the report of different countries separately. We calculated the daily new cases and weekly new cases to gain insights from it. The global vaccination data provides the reported doses from Dec 2020 to now for each country. We also calculated the daily new doses and weekly new doses for the vaccination effort in United States.
+To analyze the vaccination effort in the United States, we used JHU COVID-19 cases and CDC vaccination data. The COVID-19 cases data provides the reported cases from Jan 2020 to now. The data is collected from the report of different countries separately. We calculated the daily new cases and weekly new cases to gain insights from it. The global vaccination data provides the reported doses from Dec 2020 to now for each country. We also calculated the daily new doses and weekly new doses for the vaccination effort in United States.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 dosesraw <- read_csv("https://raw.githubusercontent.com/govex/COVID-19/master/data_tables/vaccine_data/global_data/time_series_covid19_vaccine_doses_admin_global.csv")
@@ -280,11 +282,11 @@ weekly_merge <- merge(weekly_case, weekly_dose, by=c("country_region","date"), a
 ## Missing value analysis
 
 
-### WHO Covid-19 dashboard
+### WHO COVID-19 dashboard
 
-There are no NAN values in the cumulative cases and deaths data. But there are 4 countries/regions with 0 cases and deaths.They are Democratic People's Republic of Korea,Saint Helena,Tokelau and Turkmenistan. It implies that they didn't report to the WHO and their data are missing. There is a category "other" in the table and it may contain data of countries not included in the 237 countries/ regions.
+There are no NAN values in the cumulative cases and deaths data. But there are 4 countries/regions with 0 cases and deaths.They are Democratic People's Republic of Korea, Saint Helena, Tokelau and Turkmenistan. It implies that they didn't report to the WHO and their data are missing. There is a category "other" in the table and it may contain data of countries not included in the 237 countries/ regions.
 
-There are 8 countries/regions which have cumulative cases and deaths data but don't have vaccination data. By comparing the two table we can find the countries are Bonaire, Sint Eustatius and Saba,Democratic Republic of the Congo,Holy See,Mayotte,Réunion,Saint Barthélemy,Saint Martin,and Saint Pierre and Miquelon. They are relatively small regions which may lack relevant data.
+There are 8 countries/regions which have cumulative cases and deaths data but don't have vaccination data. By comparing the two table we can find the countries are Bonaire, Sint Eustatius and Saba, Democratic Republic of the Congo, Holy See, Mayotte, Réunion, Saint Barthélemy, Saint Martin, and Saint Pierre and Miquelon. They are relatively small regions which may lack relevant data.
 
 ### WHO Vaccination Data
 
@@ -296,7 +298,7 @@ plot_missing(world_vac_df1, percent=TRUE)
 
 ### CDC Global Vaccine Data
 
-As we can see from the chart, the missing values consist of 3.4% of the dataset. It is a univariate missing pattern where missing data occur only in doses_n. There are about 70% missing data around January 2021. Missing data gradually decrease over time and remain very low starting from June 2021. The main reason could many countries lack access to vaccines at the beginning of the approval of COVID-19 vaccines due to the delays and shortages. Many countries have sufficient vaccines over time, the missing data decrease as well.
+As we can see from the chart, the missing values consist of 3.4% of the dataset. It is an univariate missing pattern where missing data occur only in doses_n. There are about 70% missing data around January 2021. Missing data gradually decrease over time and remain very low starting from June 2021. The main reason could many countries lack access to vaccines at the beginning of the approval of COVID-19 vaccines due to the delays and shortages. Many countries have sufficient vaccines over time, the missing data decrease as well.
 
 ```{r}
 library(naniar)
