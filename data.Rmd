@@ -24,7 +24,12 @@ There is a csv file for the cumulative cases and deaths data of each country. Th
 
 There is a csv file for global vaccination data. We can load the number of persons vaccinated with different numbers of vaccines and vaccination rates of different countries from the file. The country names, WHO region, iso number, date reported are also included in the csv file. There are 229 records of countries and regions.
 
-### CDC Data for Covid-19
+
+### CDC Data for COVID-19 Vaccination
+
+The vaccination data provides the vaccination efforts across the United States and is downloaded as csv file. It provides the doses attributed, doses administered and vaccination rate with different age groups by state. There are 54 records of jurisdiction (State/Territory).
+
+The global confirmed cases data provides the daily confirmed cases, reported at the country/region level. The province/state, country/region, date are included the csv file.
 
 
 
@@ -130,7 +135,6 @@ world_vac <- world_vac_df %>%
 # check and remove missing values and outliers
 na_index <- c(which(is.na(world_vac$fully_vaccinated_rate)),which(world_vac$fully_vaccinated_rate<=0))
 outlier_index <- which(world_vac$fully_vaccinated_rate>100)
-world_vac[c(na_index,outlier_index),]
 world_vac <- world_vac[-c(na_index,outlier_index),]
 
 ```
@@ -176,12 +180,12 @@ vac_age <- vac_age_df %>%
   filter(age %in% c('5 - 11 Years','12 - 17 Years','18 - 24 Years','25 - 49 Years',
                     '50 - 64 Years', '65+ Years'))
 vac_age_long <- pivot_longer(vac_age[,c(2,3,5)],cols=!age)
-vac_age_long
 ```
 
 #### US Vaccination by State
 
-Brief explanation here.
+To analyze the vaccination progress across the United States, we used CDC united states vaccination data. It provides the detailed vaccination rate by each jurisdiction. For each jurisdiction, it specifies the percent of residents vaccinated, doses administered, doses distributed, and fully vaccination rate. We compared the percent of people fully vaccinated and US average fully vaccination rate in the next chapter.
+
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 vacraw <- read_csv("https://raw.githubusercontent.com/5702-Final-Project-7/Covid-19-Data-Analysis/main/covid19_vaccinations_us.csv")
@@ -198,7 +202,7 @@ vaccinated_us[, c(2)] <- sapply(vaccinated_us[, c(2)], as.numeric)
 
 #### Vaccination and Reported Cases
 
-Brief explanation here.
+To analyze the vaccination effort in the United States, we used CDC COVID-19 cases and vaccination data. The COVID-19 cases data provides the reported cases from Jan 2020 to now. The data is collected from the report of different countries separately. We calculated the daily new cases and weekly new cases to gain insights from it. The global vaccination data provides the reported doses from Dec 2020 to now for each country. We also calculated the daily new doses and weekly new doses for the vaccination effort in United States.
 
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
 dosesraw <- read_csv("https://raw.githubusercontent.com/govex/COVID-19/master/data_tables/vaccine_data/global_data/time_series_covid19_vaccine_doses_admin_global.csv")
@@ -290,9 +294,21 @@ There are some missing values in the WHO global vaccination data set. More than 
 plot_missing(world_vac_df1, percent=TRUE)
 ```
 
+### CDC Global Vaccine Data
+
+As we can see from the chart, the missing values consist of 3.4% of the dataset. It is a univariate missing pattern where missing data occur only in doses_n. There are about 70% missing data around January 2021. Missing data gradually decrease over time and remain very low starting from June 2021. The main reason could many countries lack access to vaccines at the beginning of the approval of COVID-19 vaccines due to the delays and shortages. Many countries have sufficient vaccines over time, the missing data decrease as well.
+
+```{r}
+library(naniar)
+vis_miss(doses)
+gg_miss_fct(doses, date)
+```
 
 
-```{r,include=False}
+
+
+
+```{r,include=FALSE}
 save.image(file='~/projectimage.Rdata')
 ```
 
