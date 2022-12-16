@@ -74,7 +74,7 @@ week:+d.week
 
 };
 
-d3.csv("https://raw.githubusercontent.com/5702-Final-Project-7/Covid-19-Data-Analysis/main/worldweekly.csv").then(function(data) {
+d3.csv("https://raw.githubusercontent.com/5702-Final-Project-7/Covid-19-Data-Analysis/main/data/worldweekly.csv").then(function(data) {
   
   console.log(d3.min(data.map(d => d.week)));
   console.log(d3.max(data.map(d => d.week)));

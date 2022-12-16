@@ -47,8 +47,8 @@ The cumulative cases and deaths data from WHO can be loaded from the csv files d
 ```{r}
 library("tidyverse")
 library("dplyr")
-casedata <- read.csv("WHO-COVID-19-global-table-data_m.csv")
-code<-read.csv("WHO-COVID-19-global-data.csv")
+casedata <- read.csv("data/WHO-COVID-19-global-table-data_m.csv")
+code<-read.csv("data/WHO-COVID-19-global-data.csv")
 ccode=code%>%select(c("Country_code","Country"))
 countrycode=ccode[!duplicated(ccode$Country),]
 case_code=merge(casedata,countrycode,by.x="Name",by.y="Country")
@@ -56,7 +56,7 @@ df_case = subset(case_code, select = c(Country_code,Cases...cumulative.total,Cas
 #df_case:case and death with ISO Alpha-2 country code
 
 save(df_case, file = "df_case.Rdata")
-vaccinedata<- read.csv("vaccination-data.csv")
+vaccinedata<- read.csv("data/vaccination-data.csv")
 df_v=subset(vaccinedata,select=c(ISO3,PERSONS_VACCINATED_1PLUS_DOSE_PER100,PERSONS_FULLY_VACCINATED_PER100))
 save(df_v, file = "df_v.Rdata")
 ```
@@ -71,7 +71,7 @@ We also extract the U.S. data from the global data set, and compute the reported
 library(dplyr)
 library(tidyverse)
 library(ggplot2)
-who_daily <- read.csv("https://raw.githubusercontent.com/5702-Final-Project-7/Covid-19-Data-Analysis/main/WHO-COVID-19-global-data.csv")
+who_daily <- read.csv("https://raw.githubusercontent.com/5702-Final-Project-7/Covid-19-Data-Analysis/main/data/WHO-COVID-19-global-data.csv")
 # summarize the daily reported data of all the countries
 world_daily <- who_daily %>%
   group_by(Date_reported) %>%
@@ -122,7 +122,7 @@ To analyze the U.S. vaccination rate, we tried to compare it to those of other c
 
 
 ```{r}
-world_vac_df <- read.csv('https://raw.githubusercontent.com/5702-Final-Project-7/Covid-19-Data-Analysis/main/vaccination-data.csv')
+world_vac_df <- read.csv('https://raw.githubusercontent.com/5702-Final-Project-7/Covid-19-Data-Analysis/main/data/vaccination-data.csv')
 world_vac_df1 <- world_vac_df %>% 
   rename(ct=COUNTRY, rg = WHO_REGION, sce=DATA_SOURCE,
          date=DATE_UPDATED, vs=TOTAL_VACCINATIONS, v1p=PERSONS_VACCINATED_1PLUS_DOSE,
@@ -167,7 +167,7 @@ us_vac <- world_vac_df %>%
 For the vaccination rate of different age groups, we use the data from CDC (Centers of Disease Control and Prevention). It provides vaccinated and fully vaccinated rate by age. As each age group yields several observations from different date, we use the data from the latest update as the vaccinated rate is a cumulative variable. Besides, there are no reported data from children less than 5 years old, as they are too young to get vaccinated, so we only focus on 6 age groups: '5 - 1','12 - 17','18 - 24','25 - 49', '50 - 64', and '65+'.
 
 ```{r}
-vac_age_df <- read.csv('COVID-19_Vaccination_and_Case_Trends_by_Age_Group__United_States.csv')
+vac_age_df <- read.csv('data/COVID-19_Vaccination_and_Case_Trends_by_Age_Group__United_States.csv')
 vac_age <- vac_age_df %>%
   select(Date.Administered,AgeGroupVacc,Series_Complete_Pop_pct_agegroup,
          X7.day_avg_group_cases_per_100k,Administered_Dose1_pct_agegroup) %>%
@@ -190,7 +190,7 @@ To analyze the vaccination progress across the United States, we used CDC united
 
 
 ```{r}
-vacraw <- read_csv("https://raw.githubusercontent.com/5702-Final-Project-7/Covid-19-Data-Analysis/main/covid19_vaccinations_us.csv")
+vacraw <- read_csv("https://raw.githubusercontent.com/5702-Final-Project-7/Covid-19-Data-Analysis/main/data/covid19_vaccinations_us.csv")
 vac_us <- vacraw %>%
   select(`Jurisdiction (State/Territory) or Federal Entity`, 
          `Percent of total pop with a completed primary series`) %>%
