@@ -162,13 +162,13 @@ Covid-19 started at the beginning of 2020, and spread quickly accross the world.
 
 From the two weekly time series, we observed the following patterns.
 
-* The first spike of reported deaths appeared in April 2020, with no spike in reported cases at the same time. This refer to the early spread in China. The low cases and high deaths also indicate the high fatality rate of the virus at the beginning.
+* The first peak of reported deaths appeared in April 2020, with no peak in reported cases at the same time. This refer to the early spread in China. The low cases and high deaths also indicate the high fatality rate of the virus at the beginning.
 
-* In January 2021, both the reported cases and reported deaths experience a relatively strong spike. During this time, the has pandemic spreaded worldwide, and contries in Europe and America are experiencing a high infection rate of Covid-19.
+* In January 2021, both the reported cases and reported deaths experience a relatively strong peak. During this time, the has pandemic spreader worldwide, and countries in Europe and America are experiencing a high infection rate of Covid-19.
 
 * The reported cases and deaths began decreasing slowly with vaccination being available since December 2020.
 
-* The most outstanding spike of reported cases appeared in January 2022, with over 20 million weekly new cases around the world. This was over four times of that in January 2021. This was exactly the time when Omicron variant spread drastically accross the world. However, the report deaths did not increase that much at the mean time, from which we could conclude that Omicron spreads more easily than earlier variants, but causes less severe illness and death in general.
+* The most outstanding peak of reported cases appeared in January 2022, with over 20 million weekly new cases around the world. This was over four times of that in January 2021. This was exactly the time when Omicron variant spread drastically across the world. However, the report deaths did not increase that much at the mean time, from which we could conclude that Omicron spreads more easily than earlier variants, but causes less severe illness and death in general.
 
 ```{r}
 # global new cases by day
