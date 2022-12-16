@@ -47,7 +47,7 @@ The cumulative cases and deaths data from WHO can be loaded from the csv files d
 ```{r}
 library("tidyverse")
 library("dplyr")
-casedata <- read.csv("WHO-COVID-19-global-table-data.csv")
+casedata <- read.csv("WHO-COVID-19-global-table-data_m.csv")
 code<-read.csv("WHO-COVID-19-global-data.csv")
 ccode=code%>%select(c("Country_code","Country"))
 countrycode=ccode[!duplicated(ccode$Country),]

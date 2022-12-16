@@ -3,6 +3,7 @@ Here we present an interactive version of the global weekly new reported cases f
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
 ```
 
 <script src="https://d3js.org/d3.v7.js"></script>
